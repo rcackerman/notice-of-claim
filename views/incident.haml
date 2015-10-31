@@ -1,0 +1,49 @@
+%html
+  %head
+    %title "Notice of Claim Builder"
+    %link{:rel => "stylesheet", :href => "/css/bootstrap.min.css"}
+  %body
+    .container#main{role: "main"}
+      .row
+        .md-col-12
+          %form{:method => "post"}
+            %label{:for => "outcome"} What happened?
+            %fieldset{id: "outcome"}
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[battery]", name: "outcome[battery]"}
+                  An officer physically injured me
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[assault]", name: "outcome[assault]"}
+                  An officer threatened to physically injure me
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[unlawful-search]", name: "outcome[unlawful-search]"}
+                  An officer searched my property without my permission
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[seizure]", name: "outcome[seizure]"}
+                  An officer took my property
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[damage]", name: "outcome[damage]"}
+                  An officer damaged my property
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[unlawful-arrest]", name: "outcome[unlawful-arrest]"}
+                  An officer arrested me without probable cause
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[med-attention]", name: "outcome[med-attention]"}
+                  I needed medical attention, but the police refused to provide it
+              .checkbox
+                %label
+                  %input{type: "checkbox", id: "outcome[none]", name: "outcome[none]"}
+                  None of the above
+            .form-group
+              %label{:for => "number-officers"} How many officers were involved?
+              %select.form-control{id: "number-officers", name: "number-officers"}
+                - (1..10).each do |i|
+                  %option= i
+            %button.btn.btn-default{type: "submit"} Submit

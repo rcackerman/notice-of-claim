@@ -1,0 +1,37 @@
+%html
+  %head
+    %title "Notice of Claim Builder"
+    %link{:rel => "stylesheet", :href => "/css/bootstrap.min.css"}
+  %body
+    -#%nav.navbar.navbar-inverse.navbar-fixed-top
+      -#.container
+        -#.navbar-header
+          -#%a.navbar-brand Project name
+          -#%button{:type => "button", :class => "navbar-toggle collapsed",
+            -#:data => {:toggle => "collapse", :target => "#navbar"},
+            -#:aria => {:expanded ="false", controls => "navbar"}
+            -#}
+              -#%span.sr-only Toggle navigation
+              -#%span.icon-bar
+              -#%span.icon-bar
+              -#%span.icon-bar
+          -#.collapse.navbar-collapse#navbar
+            -#%ul.nav.navbar-nav
+              -#%li.active
+                -#%a{:href => "#"} Home
+              -#%li
+                -#%a{:href => "about"} About
+    .container#main{role: "main"}
+      .row
+        .md-col-12
+          %form{:method => "post"}
+            .form-group
+              %label{:for => "mistreated"} Were you harmed or mistreated by the NYPD?
+              %select.form-control{id: "mistreated", name: "mistreated"}
+                %option(selected disabled hidden value='')
+                %option Yes
+                %option No
+            .form-group
+              %label{:for => "incident-date"} When did it happen?
+              %input.form-control{type: "date", name: "incident-date", id: "incident-date"}
+            %button.btn.btn-default{type: "submit", value: "Submit"} Submit

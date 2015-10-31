@@ -1,0 +1,41 @@
+%html
+  %head
+    %title "Notice of Claim Builder"
+    %link{:rel => "stylesheet", :href => "/css/bootstrap.min.css"}
+  %body
+    .container#main{role: "main"}
+      .row
+        .md-col-12
+          %form{:method => "post"}
+            .form-group#name
+              %label{:for => "client-name"} Name
+              %input.form-control{type: "text", id: "client-name", name: "client-name"}
+            .form-group#who
+              .checkbox
+                %label
+                  %input.checkbox{type: "checkbox", value: ""}
+                  This incident happened to me.
+              .checkbox
+                %label
+                  %input.checkbox{type: "checkbox", value: ""}
+                  This incident happened to my child. 
+              .checkbox
+                %label
+                  %input.checkbox{type: "checkbox", value: ""}
+                  This incident happend to someone else.
+            .form-group#child-name
+              %label{:for => "child-name"} Child's Name
+              %input.form-control{type: "text", id: "child-name", name: "child-name"}
+            .form-group#email
+              %label{:for => "client-email"} Email
+              %input.form-control{type: "email", id: "client-email", name: "client-email"}
+            .form-group#snailmail
+              %label{:for => "client-address"} Your Address
+              %input.form-control{type: "text", id: "client-address", name: "client-address"}
+            .form-group#incident-address
+              %label{:for => "incident-address"} Incident Address/Location
+              %input.form-control{type: "text", id: "incident-address", name: "incident-address"}
+            .form-group#incident-time
+              %label{:for => "incident-time"} Incident Time
+              %input.form-control{type: "time", id: "incident-time", name: "incident-time"}
+            %button.btn.btn-default{type: "submit", value: "Submit"} Submit
