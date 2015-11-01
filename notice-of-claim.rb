@@ -1,49 +1,58 @@
 require 'sinatra'
+require 'sinatra/activerecord'
 require 'haml'
 
-# multipart form
-# index -> demographic -> 
-get '/' do
-  haml :index
+class User < ActiveRecord::Base
 end
 
-post '/' do
-  puts params
-  @lawyer = params['lawyer']
-  redirect to('/demographic/')
+class NoticeOfClaim < ActiveRecord::Base
 end
 
-get '/demographic/' do
-  haml :demographic
-end
+class NOCApp < Sinatra::Base
+  # multipart form
+  # index -> demographic -> 
+  get '/' do
+    haml :index
+  end
 
-post '/demographic/' do
-  puts params
-  redirect to('/incident/')
-end
+  post '/' do
+    puts params
+    @lawyer = params['lawyer']
+    redirect to('/demographic/')
+  end
 
-get '/incident/' do
-  haml :incident
-end
+  get '/demographic/' do
+    haml :demographic
+  end
 
-post '/incident/' do
-  puts params
-  redirect to('/incident-details/')
-end
+  post '/demographic/' do
+    puts params
+    redirect to('/incident/')
+  end
 
-get '/incident-details/' do
-  haml :incident_details
-end
+  get '/incident/' do
+    haml :incident
+  end
 
-post '/incident-details/' do
-  puts params
-  redirect to('/review/')
-end
+  post '/incident/' do
+    puts params
+    redirect to('/incident-details/')
+  end
 
-get '/review/' do
-  haml :review
-end
+  get '/incident-details/' do
+    haml :incident_details
+  end
 
-post '/review/' do
-  puts params
+  post '/incident-details/' do
+    puts params
+    redirect to('/review/')
+  end
+
+  get '/review/' do
+    haml :review
+  end
+
+  post '/review/' do
+    puts params
+  end
 end
