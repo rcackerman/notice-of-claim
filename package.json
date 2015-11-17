@@ -1,0 +1,27 @@
+{
+  "name": "notice-of-claim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "application.js",
+  "dependencies": {
+    "babel-preset-react": "^6.1.18",
+    "react": "^0.14.2",
+    "babelify": "^7.2.0",
+    "react-dom": "^0.14.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcackerman/notice-of-claim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rcackerman/notice-of-claim/issues"
+  },
+  "homepage": "https://github.com/rcackerman/notice-of-claim#readme"
+}
