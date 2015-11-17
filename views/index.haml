@@ -2,11 +2,6 @@
   %head
     %title "Notice of Claim Builder"
     %link{:rel => "stylesheet", :href => "/css/bootstrap.min.css"}
-    %script{src: "https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-dom.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"}
-    %script{:src => "/js/underscore.js"}
   %body
     -#%nav.navbar.navbar-inverse.navbar-fixed-top
       -#.container
@@ -26,22 +21,7 @@
                 -#%a{:href => "#"} Home
               -#%li
                 -#%a{:href => "about"} About
-    .container#main{role: "main"}
-    %script{type: "text/babel"}
-    :javascript
-      var NOCForm = React.createClass({
-        render: function() {
-          return (
-              <p>Hello, world! I am a CommentBox.</p>
-          );
-        }
-      });
-      ReactDOM.render(
-        <NOCForm />,
-        document.getElementById('main')
-      );
-
-
+    #main
       -#.row
         -#.md-col-12
           -#%form{:method => "post"}
@@ -196,11 +176,12 @@
             -#.form-group
               -#%label{:for => "damages"} Damages:
 
--#Did you experience physical pain?
--#Did you seek medical attention?
--#Did you have to miss work?
--#Did you experience embarrassment or humiliation?
--#Did you experience emotional distress?
--#Was your property lost, damaged or stolen?
+            -#Did you experience physical pain?
+            -#Did you seek medical attention?
+            -#Did you have to miss work?
+            -#Did you experience embarrassment or humiliation?
+            -#Did you experience emotional distress?
+            -#Was your property lost, damaged or stolen?
 
             %button.btn.btn-default{type: "submit", value: "Submit"} Submit
+    %script{src: "/js/notice-of-claim.js"}

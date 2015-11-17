@@ -1,58 +1,42 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
 
-// - form
-// - - theme (intro, demographics, etc)
-// - - - fieldset
+// form
+// - theme
+// - - question set
 
-var NOCForm = React.createClass({
+var Form = React.createClass({
   render: function() {
-    //var themes = _.uniq(
-        //_.map(QUESTIONS,
-              //function(i) { return i.theme }
-        //)
-    //);
     return (
-        Hello
-        //<NOCThemeGroup questions={this.props.questions}/>    
+       <Theme />
     );
-    //return (
-      //themes.forEach(function(theme) {
-        //<div className={theme}>
-          //<NOCThemeGroup theme={theme} />
-        //</div>
-      //})
-    //);
   }
 });
 
-//var NOCThemeGroup = React.createClass({
-  //render: function() {
-    //var themeQuestions = _.where(this.props.questions,
-                                  //{theme: "intro"}
-                                //);
-    //return (
-        //<p>Themes are: {this.props.questions.theme}</p>
-        //<div className="themes">
-          //<NOCFieldset questions={themeQuestions}/>
-        //</div>
-    //);
-  //}
-//});
+var Theme = React.createClass({
+  render: function() {
+    return (
+      <div className="theme">
+        <h1>Theme</h1>
+        <QuestionSet />
+      </div>
+    );
+  }
+});
 
-//var NOCFieldset = React.createClass({
-  //render: function() {
-    //<div className="checkbox">
-      //Fieldset
-    //</div>
-  //}
-//});
-
-//var QUESTIONS = [
-  //{theme: "intro"},
-  //{theme: "demographics"}
-//];
+var QuestionSet = React.createClass({
+  render: function() {
+    return (
+        <div className="form-group">
+          <label>Label</label>
+          <input />
+        </div>
+    );
+  }
+});
 
 ReactDOM.render(
-  <NOCForm />,
+  <Form />,
   document.getElementById('main')
 );
 
