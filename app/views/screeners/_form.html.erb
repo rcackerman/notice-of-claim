@@ -1,0 +1,17 @@
+<%= form_for(@screener) do |f| %>
+  <% if @screener.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@screener.errors.count, "error") %> prohibited this screener from being saved:</h2>
+
+      <ul>
+      <% @screener.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+= form_for(@welcome) do |f|
+  - if @welcome.errors.any?
+    .error_explanation
+      %p #{pluralize(@welcome.errors.count, "error")} prohibited this welcome from being saved:
+      %ul
+        - @welcome.errors.full_messages.each do |message|
+          %li= message
+  = render('form_groups/intro')
+  = render('form_groups/incident_details')
+  = render('form_groups/damages')
+  %button.btn.btn-default{type: "submit", value: "Submit"} Submit
+  #actions
+    = f.submit
