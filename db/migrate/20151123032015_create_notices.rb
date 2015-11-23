@@ -5,7 +5,7 @@ class CreateNotices < ActiveRecord::Migration
       t.string    :name
       t.string    :address
       t.string    :incident_location
-      t.date_time :incident_occurred_at
+      t.datetime :incident_occurred_at
       t.text      :incident_description
       t.boolean   :officer_injured_me
       t.string    :officer_injured_me_how
@@ -21,7 +21,7 @@ class CreateNotices < ActiveRecord::Migration
       t.boolean   :officer_arrested_no_probable_cause
       t.boolean   :officer_refused_medical_attention
       t.boolean   :none_of_the_above
-      t.integer   :number_officers, limit: 10
+      t.integer   :number_officers
       t.boolean   :damages_physical_pain
       t.boolean   :damages_medical_attention
       t.boolean   :damages_miss_work
