@@ -6,16 +6,19 @@
         - @screener.errors.full_messages.each do |message|
           %li= message
   .form-group
+    = f.label :harmed_mistreated
     = f.select(:harmed_mistreated,
-                  options_for_select([['Yes', 1], ['No', 2]], :include_blank))
+        options_for_select([['Yes', 1], ['No', 2]], :include_blank),
+        class: 'form-control')
     -#%label{:for => "mistreated"} Were you harmed or mistreated by the NYPD?
     -#%select.form-control{id: "mistreated", name: "mistreated"}
       %option(selected disabled hidden value='')
       %option Yes
       %option No
   .form-group
-    = f.date_field(:incident_occurred_on)
+    = f.label :incident_occurred_on
+    = f.date_field :incident_occurred_on, class: 'form-control'
     -#%label{:for => "incident-date"} When did it happen?
     -#%input.form-control{type: "date", name: "incident-date", id: "incident-date"}
   .actions
-    = f.submit
+    = f.submit 'Submit', class: 'btn btn-default'
