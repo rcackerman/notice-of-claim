@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'screeners#new'
+
   resources :screeners
 
   resources :notices
