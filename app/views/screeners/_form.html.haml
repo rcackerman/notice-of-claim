@@ -1,4 +1,4 @@
-= form_for(@screener) do |f|
+= form_for(@screener, data: {}, html: {class: 'form-horizontal'}) do |f|
   - if @screener.errors.any?
     #error_explanation
       %h3 #{pluralize(@screener.errors.count, "error")} prohibited this screener from being saved:
@@ -6,19 +6,16 @@
         - @screener.errors.full_messages.each do |message|
           %li= message
   .form-group
-    = f.label :harmed_mistreated
-    = f.select(:harmed_mistreated,
-        options_for_select([['Yes', 1], ['No', 2]], :include_blank),
-        class: 'form-control')
-    -#%label{:for => "mistreated"} Were you harmed or mistreated by the NYPD?
-    -#%select.form-control{id: "mistreated", name: "mistreated"}
-      %option(selected disabled hidden value='')
-      %option Yes
-      %option No
+    = f.label :harmed_mistreated, 'Were you harmed or mistreated by the NYPD?', class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.select(:harmed_mistreated,
+          [['Yes', 1], ['No', 2]], {include_blank: true},
+          {class: 'form-control'})
   .form-group
-    = f.label :incident_occurred_on
-    = f.date_field :incident_occurred_on, class: 'form-control'
-    -#%label{:for => "incident-date"} When did it happen?
-    -#%input.form-control{type: "date", name: "incident-date", id: "incident-date"}
+    = f.label :incident_occurred_on, 'When did the incident happen?', class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.date_field :incident_occurred_on, class: 'form-control'
+      -#%label{:for => "incident-date"} When did it happen?
+      -#%input.form-control{type: "date", name: "incident-date", id: "incident-date"}
   .actions
     = f.submit 'Submit', class: 'btn btn-default'
