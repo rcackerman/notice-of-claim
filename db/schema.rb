@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123183253) do
+ActiveRecord::Schema.define(version: 20151130032037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20151123183253) do
     t.boolean  "damages_miss_work"
     t.boolean  "damages_embarrassment"
     t.boolean  "damages_property"
+    t.boolean  "damages_emotional_distress"
   end
 
   create_table "officers", force: :cascade do |t|
@@ -53,6 +54,24 @@ ActiveRecord::Schema.define(version: 20151123183253) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "physical_injuries", force: :cascade do |t|
+    t.integer  "notice_id"
+    t.boolean  "beaten_with_object"
+    t.boolean  "choked"
+    t.boolean  "pepper_sprayed"
+    t.boolean  "tasered"
+    t.boolean  "attacked_by_police_animal"
+    t.boolean  "hit_by_police_vehicle"
+    t.boolean  "handcuffs_too_tight"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "physical_force"
+    t.boolean  "other"
+    t.text     "other_description"
+  end
+
+  add_index "physical_injuries", ["notice_id"], name: "index_physical_injuries_on_notice_id", using: :btree
+
   create_table "screeners", force: :cascade do |t|
     t.boolean  "harmed_mistreated"
     t.datetime "incident_occurred_on"
@@ -60,4 +79,20 @@ ActiveRecord::Schema.define(version: 20151123183253) do
     t.datetime "updated_at",           null: false
   end
 
+  create_table "searched_objects", force: :cascade do |t|
+    t.integer  "notice_id"
+    t.boolean  "vehicle"
+    t.boolean  "bag"
+    t.boolean  "pockets"
+    t.boolean  "home"
+    t.boolean  "other"
+    t.text     "other_details"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "searched_objects", ["notice_id"], name: "index_searched_objects_on_notice_id", using: :btree
+
+  add_foreign_key "physical_injuries", "notices"
+  add_foreign_key "searched_objects", "notices"
 end
