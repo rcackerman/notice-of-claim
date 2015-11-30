@@ -4,4 +4,5 @@ class Notice < ActiveRecord::Base
   has_many :officers
   has_one :searched_object
   has_one :physical_injury
+  has_one :output
 end

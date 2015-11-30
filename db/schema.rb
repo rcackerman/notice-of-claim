@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130032037) do
+ActiveRecord::Schema.define(version: 20151130032825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(version: 20151130032037) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "outputs", force: :cascade do |t|
+    t.integer  "notice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "physical_injuries", force: :cascade do |t|
     t.integer  "notice_id"
     t.boolean  "beaten_with_object"
@@ -93,6 +99,7 @@ ActiveRecord::Schema.define(version: 20151130032037) do
 
   add_index "searched_objects", ["notice_id"], name: "index_searched_objects_on_notice_id", using: :btree
 
+  add_foreign_key "outputs", "notices"
   add_foreign_key "physical_injuries", "notices"
   add_foreign_key "searched_objects", "notices"
 end
