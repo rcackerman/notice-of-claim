@@ -1,5 +1,6 @@
 class NoticesController < ApplicationController
-  before_action :set_notice, only: [:show, :edit, :update, :destroy]
+  before_action :set_notice, only: [:show, :edit, :update]
+  #before_action :set_notice, only: [:show, :edit, :update, :destroy]
 
   # GET /notices
   # GET /notices.json
@@ -53,13 +54,13 @@ class NoticesController < ApplicationController
 
   # DELETE /notices/1
   # DELETE /notices/1.json
-  def destroy
-    @notice.destroy
-    respond_to do |format|
-      format.html { redirect_to notices_url, notice: 'Notice was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  #def destroy
+    #@notice.destroy
+    #respond_to do |format|
+      #format.html { redirect_to notices_url, notice: 'Notice was successfully destroyed.' }
+      #format.json { head :no_content }
+    #end
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,114 +1,139 @@
-.form-group#incident-address
-  %label{:for => "incident-address"} Incident Address/Location
-  %input.form-control{type: "text", id: "incident-address", name: "incident-address"}
-.form-group#incident-time
-  %label{:for => "incident-time"} Incident Time
-  %input.form-control{type: "time", id: "incident-time", name: "incident-time"}
+.form-group#incident-location
+  = f.label :incident_location, "Incident Location", class: 'col-sm-2 control-label'
+  .col-sm-10
+    = f.text_field :incident_location, class: 'form-control'
+.form-group#incident-occurred-at
+  = f.label :incident_occurred_at, class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.datetime_field :incident_occurred_at, class: 'form-control'
 .form-group#outcome
-  %label{:for => "outcome"} What happened?
-  %fieldset{id: "outcome"}
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[battery]", name: "outcome[battery]"}
-        An officer physically injured me
-    // Physical injury sub-form
-    %label{:for => "physical-injury-details"} How did the officer physically injure you?
-    %fieldset{id: "physical-injury-details"}
+  %label{:for => "outcome", class: "col-sm-2 control-label"} What happened?
+  .col-sm-10
+    %fieldset{id: "outcome"}
       .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][beaten]", name: "outcome[battery][beaten]"}
-          Beaten with object
+        = f.label :officer_injured_me do
+          = f.check_box :officer_injured_me
+          An officer physically injured me
+      // Physical injury sub-form
+      .form-group
+        = label_tag "physical-injury-details", "How did the officer physically injure you?"
+        = field_set_tag nil, id: "physical-injury-details" do
+          = f.fields_for :physical_injuries do |phy_inj|
+            .checkbox
+              = phy_inj.label :beaten_with_object do
+                = phy_inj.check_box :beaten_with_object
+                Beaten with object
+            .checkbox
+              = phy_inj.label :hit_by_police_vehicle do
+                = phy_inj.check_box :hit_by_police_vehicle
+                Hit by police vehicle
+            .checkbox
+              = phy_inj.label :choked do
+                = phy_inj.check_box :choked
+                Choked
+            .checkbox
+              = phy_inj.label :pepper_sprayed do
+                = phy_inj.check_box :pepper_sprayed
+                Pepper-sprayed
+            .checkbox
+              = phy_inj.label :tasered do
+                = phy_inj.check_box :tasered
+                Tasered
+            .checkbox
+              = phy_inj.label :attacked_by_police_animal do
+                = phy_inj.check_box :attacked_by_police_animal
+                Attacked by police animal
+            .checkbox
+              = phy_inj.label :physical_force do
+                = phy_inj.check_box :physical_force
+                Physical force (ie kicked, hit)
+            .checkbox
+              = phy_inj.label :handcuffs_too_tight do
+                = phy_inj.check_box :handcuffs_too_tight
+                Handcuffs were applied too tightly
+            .checkbox
+              = phy_inj.label :other do
+                = phy_inj.check_box :other
+                Other
+            .form-group
+              = phy_inj.label :other_description, class: 'sr-only'
+              = phy_inj.text_field :other_description, class: 'form-control'
+    .form-group
       .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][vehicle]", name: "outcome[battery][vehicle]"}
-          Hit by police vehicle
+        = f.label :officer_threatened_injury do
+          = f.check_box :officer_threatened_injury
+          An officer threatened to physically injure me
+    .form-group
       .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][choked]", name: "outcome[battery][choked]"}
-          Choked
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][pepper]", name: "outcome[battery][pepper]"}
-          Pepper-sprayed
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][taser]", name: "outcome[battery][taser]"}
-          Tasered
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][animal]", name: "outcome[battery][animal]"}
-          Attacked by police animal
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][force]", name: "outcome[battery][force]"}
-          Physical force
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][handcuffs]", name: "outcome[battery][handcuffs]"}
-          Handcuffs were applied too tightly
-      .checkbox
-        %label
-          %input{type: "checkbox", id: "outcome[battery][other]", name: "outcome[battery][other]"}
-          Other
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[assault]", name: "outcome[assault]"}
-        An officer threatened to physically injure me
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[unlawful-search]", name: "outcome[unlawful-search]"}
-        An officer searched me or my property without my permission
-        // Physical injury sub-form
-        %label{:for => "unlawful-search-details"} What was searched?
-        %fieldset{id: "unlawful-search-details"}
+        = f.label :officer_searched do
+          = f.check_box :officer_searched
+          An officer searched me or my property without my permission
+    .form-group
+      = label_tag "What did the officer search?"
+      = field_set_tag nil do
+        = f.fields_for :searched_objects do |so|
           .checkbox
-            %label
-              %input{type: "checkbox", id: "outcome[unlawful-search][vehicle]", name: "outcome[unlawful-search][vehicle]"}
-              My vehicle
+            = so.label :vehicle do
+              = so.check_box :vehicle
+              Vehicle
           .checkbox
-            %label
-              %input{type: "checkbox", id: "outcome[unlawful-search][bag]", name: "outcome[unlawful-search][bag]"}
-              My bag
+            = so.label :bag do
+              = so.check_box :bag
+              Bag
           .checkbox
-            %label
-              %input{type: "checkbox", id: "outcome[unlawful-search][pockets]", name: "outcome[unlawful-search][pockets]"}
-              My pockets
+            = so.label :pockets do
+              = so.check_box :pockets
+              Pockets
           .checkbox
-            %label
-              %input{type: "checkbox", id: "outcome[unlawful-search][home]", name: "outcome[unlawful-search][home]"}
-              My home
+            = so.label :home do
+              = so.check_box :home
+              Home
           .checkbox
-            %label
-              %input{type: "checkbox", id: "outcome[unlawful-search][other]", name: "outcome[unlawful-search][other]"}
+            = so.label :other do
+              = so.check_box :other
               Other
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[seizure]", name: "outcome[seizure]"}
-        An officer took my property
-    %label{:for => "outcome[seizure][what]"} What was taken?
-    %input{type: "text", id: "outcome[seizure][what]", name: "outcome[seizure][what]"}
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[trespass]", name: "outcome[trespass]"}
-        An officer damaged my property
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[conversion]", name: "outcome[conversion]"}
-        An officer destroyed my property
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[unlawful-arrest]", name: "outcome[unlawful-arrest]"}
+    .form-group
+      .checkbox
+        = f.label :officer_took_property do
+          = f.check_box :officer_took_property
+          An officer took my property
+    .form-group
+      = f.label :officer_took_what, "What was taken?", class: "col-sm-2 control-label"
+      .col-sm-10
+        = f.text_field :officer_took_what, class: 'form-control'
+    .form-group
+      .checkbox
+        = f.label :officer_damaged_property do
+          = f.check_box :officer_damaged_property
+          An officer damaged my property
+    .form-group
+      = f.label :officer_damaged_what, "What was damaged?", class: "col-sm-2 control-label"
+      .col-sm-10
+        = f.text_field :officer_damaged_what, class: 'form-control'
+    .form-group
+      .checkbox
+        = f.label :officer_destroyed_property do
+          = f.check_box :officer_destroyed_property
+          An officer destroyed my property
+    .form-group
+      = f.label :officer_destroyed_what, "What was destroyed?"
+      = f.text_field :officer_destroyed_what, class: 'form-control'
+    .form-group
+      .checkbox
+      = f.label :officer_arrested_no_probable_cause do
+        = f.check_box :officer_arrested_no_probable_cause
         An officer arrested me without probable cause
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[med-attention]", name: "outcome[med-attention]"}
-        I needed medical attention, but the police refused to provide it
-    .checkbox
-      %label
-        %input{type: "checkbox", id: "outcome[none]", name: "outcome[none]"}
-        None of the above
-.form-group
-  %label{:for => "number-officers"} How many officers were involved?
-  %select.form-control{id: "number-officers", name: "number-officers"}
-    - (1..10).each do |i|
-      %option= i
+    .form-group
+      .checkbox
+        = f.label :officer_refused_medical_attention do
+          = f.check_box :officer_refused_medical_attention
+          I needed medical attention, but the police refused to provide it
+    .form-group
+      .checkbox
+        = f.label :none_of_the_above do
+          = f.check_box :none_of_the_above
+          None of the above
+    .form-group
+      = f.label :number_officers, "How many officers were involved?", class: "col-sm-2 control-label"
+      .col-sm-10
+        = f.number_field :number_officers, in: 0..3, step: 1, class: 'form-control'

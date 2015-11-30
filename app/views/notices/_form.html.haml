@@ -1,13 +1,12 @@
-= form_for(@welcome) do |f|
-  - if @welcome.errors.any?
+= form_for(@notice, data: {}, html: {class: 'form-horizontal'}) do |f|
+  - if @notice.errors.any?
     .error_explanation
-      %p #{pluralize(@welcome.errors.count, "error")} prohibited this welcome from being saved:
+      %p #{pluralize(@notice.errors.count, "error")} prohibited this notice from being saved:
       %ul
-        - @welcome.errors.full_messages.each do |message|
+        - @notice.errors.full_messages.each do |message|
           %li= message
-  = render('form_groups/intro')
-  = render('form_groups/incident_details')
-  = render('form_groups/damages')
-  %button.btn.btn-default{type: "submit", value: "Submit"} Submit
+  = render(partial: 'notices/form_groups/intro', locals: {f: f})
+  = render(partial: 'notices/form_groups/incident_details', locals: {f: f})
+  = render(partial: 'notices/form_groups/damages', locals: {f: f})
   #actions
-    = f.submit
+    = f.submit 'Submit', class: 'btn btn-default'

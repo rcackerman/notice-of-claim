@@ -1,34 +1,12 @@
-.form-group
-  %label{:for => "mistreated"} Were you harmed or mistreated by the NYPD?
-  %select.form-control{id: "mistreated", name: "mistreated"}
-    %option(selected disabled hidden value='')
-    %option Yes
-    %option No
-.form-group
-  %label{:for => "incident-date"} When did it happen?
-  %input.form-control{type: "date", name: "incident-date", id: "incident-date"}
 .form-group#name
-  %label{:for => "client-name"} Name
-  %input.form-control{type: "text", id: "client-name", name: "client-name"}
-.form-group#who
-  .checkbox
-    %label
-      %input.checkbox{type: "checkbox", value: ""}
-      This incident happened to me.
-  .checkbox
-    %label
-      %input.checkbox{type: "checkbox", value: ""}
-      This incident happened to my child. 
-  .checkbox
-    %label
-      %input.checkbox{type: "checkbox", value: ""}
-      This incident happend to someone else.
-.form-group#child-name
-  %label{:for => "child-name"} Child's Name
-  %input.form-control{type: "text", id: "child-name", name: "child-name"}
-.form-group#email
-  %label{:for => "client-email"} Email
-  %input.form-control{type: "email", id: "client-email", name: "client-email"}
-.form-group#snailmail
-  %label{:for => "client-address"} Your Address
-  %input.form-control{type: "text", id: "client-address", name: "client-address"}
+  = f.label :name, "Name", class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_field :name, class: 'form-control'
+.form-group
+  = f.label :address, class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_field :address, class: 'form-control'
+.form-group
+  = f.label :incident_description, class: "col-sm-2 control-label"
+  .col-sm-10
+    = f.text_area :incident_description, size: '50x10', class: 'form-control'
