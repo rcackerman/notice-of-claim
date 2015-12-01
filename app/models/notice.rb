@@ -4,5 +4,5 @@ class Notice < ActiveRecord::Base
   has_many :officers
   has_one :searched_object
   has_one :physical_injury
-  has_one :output
+  has_one :output, inverse_of: :notice
 end
