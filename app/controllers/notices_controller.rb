@@ -56,6 +56,16 @@ class NoticesController < ApplicationController
 
   # GET
   def pdf
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = NoticePDF.new(@notice)
+        send_data pdf.render,
+                  filename: "#{@notice.name}.pdf",
+                  disposition: :inline
+      end
+    end
+    
   end
 
   # DELETE /notices/1
