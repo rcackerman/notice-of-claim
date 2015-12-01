@@ -18,7 +18,7 @@
       .form-group
         = label_tag "physical-injury-details", "How did the officer physically injure you?"
         = field_set_tag nil, id: "physical-injury-details" do
-          = f.fields_for :physical_injuries do |phy_inj|
+          = f.fields_for :physical_injury do |phy_inj|
             .checkbox
               = phy_inj.label :beaten_with_object do
                 = phy_inj.check_box :beaten_with_object
@@ -71,7 +71,7 @@
     .form-group
       = label_tag "What did the officer search?"
       = field_set_tag nil do
-        = f.fields_for :searched_objects do |so|
+        = f.fields_for :searched_object do |so|
           .checkbox
             = so.label :vehicle do
               = so.check_box :vehicle

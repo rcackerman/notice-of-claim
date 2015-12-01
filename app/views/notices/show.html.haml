@@ -1,0 +1,164 @@
+#notice= notice
+
+.row
+  .col-md-12
+    %h2 Review your Notice of Claim
+.row
+  .col-md-3
+    %p Name
+  .col-md-9
+    %p= @notice.name
+.row
+  .col-md-3
+    %p Address
+  .col-md-9
+    %p= @notice.address
+
+.row
+  .col-md-12
+    %h3 Incident Details 
+.row
+  .col-md-3
+    %p Incident Location
+  .col-md-9
+    %p= @notice.incident_location
+.row
+  .col-md-3
+    %p Incident Occurred On
+  .col-md-9
+    %p= @notice.incident_occurred_at
+
+.row
+  .col-md-12
+    %h5 Injuries
+.row
+  .col-md-3
+    %p An officer injured me
+  .col-md-9
+    %p= @notice.officer_injured_me ? "Yes" : "No"
+    -#- binding.pry
+    - unless @notice.physical_injury.nil?
+      - booleans = PhysicalInjury.columns.select { |c| c.type == :boolean }.map(&:name)
+      - trues = booleans.select { |name| @notice.physical_injury.send(name) == true }
+      - map_items(trues, "injury").each do |i|
+        .row
+          .col-md-3
+            %p= i
+          .col-md-9
+            %p Yes
+
+.row
+  .col-md-3
+    %p An officer threatened to hit or hurt me
+  .col-md-9
+    %p= @notice.officer_threatened_injury ? "Yes" : "No"
+
+.row
+  .col-md-12
+    %h5 Search, Seizure, Damage, or Destruction of Property
+.row
+  .col-md-3
+    %p An officer searched me or my property without my permission
+  .col-md-9
+    %p= @notice.officer_searched ? "Yes" : "No"
+    - unless @notice.physical_injury.nil?
+      - booleans = SearchedObject.columns.select { |c| c.type == :boolean }.map(&:name)
+      - trues = booleans.select { |name| @notice.searched_object.send(name) == true }
+      .row
+        .col-md-12
+          %p An officer took:
+          %ul
+            - map_items(trues, "searched objects").each do |i|
+              %ol= i
+
+.row
+  .col-md-3
+    %p An officer took my property
+  .col-md-9
+    %p= @notice.officer_took_property ? "Yes" : "No"
+    .row
+      .col-md-12
+        %p What was taken?
+        %p= @notice.officer_took_what
+.row
+  .col-md-3
+    %p An officer damaged my property
+  .col-md-9
+    %p= @notice.officer_damaged_property ? "Yes" : "No"
+    .row
+      .col-md-12
+        %p What was damaged?
+        %p= @notice.officer_damaged_what
+
+.row
+  .col-md-3
+    %p An officer destroyed my property
+  .col-md-9
+    %p= @notice.officer_destroyed_property ? "Yes" : "No"
+    .row
+      .col-md-12
+        %p What was destroyed?
+        %p= @notice.officer_destroyed_what
+
+.row
+  .col-md-12
+    %h5 Arrests
+.row
+  .col-md-3
+    %p An officer arrested me without probable cause
+  .col-md-9
+    %p= @notice.officer_arrested_no_probable_cause ? "Yes" : "No"
+
+.row
+  .col-md-12
+    %h5 Refusal of Medical Attention
+.row
+  .col-md-3
+    %p I needed medical attention, but an officer refused to provide it 
+  .col-md-9
+    %p= @notice.officer_refused_medical_attention ? "Yes" : "No"
+
+.row
+  .col-md-12
+    %h3 Damages
+.row
+  .col-md-3
+    %p Did you experience physical pain?
+  .col-md-9
+    %p= @notice.damages_physical_pain ? "Yes" : "No"
+
+.row
+  .col-md-3
+    %p Did you seek medical attention? 
+  .col-md-9
+    %p= @notice.damages_medical_attention ? "Yes" : "No"
+
+.row
+  .col-md-3
+    %p Did you have to miss work?
+  .col-md-9
+    %p= @notice.damages_miss_work ? "Yes" : "No"
+
+.row
+  .col-md-3
+    %p Did you experience embarrassment or humiliation?
+  .col-md-9
+    %p= @notice.damages_embarrassment ? "Yes" : "No"
+
+.row
+  .col-md-3
+    %p Did you experience emotional distress?
+  .col-md-9
+    %p= @notice.damages_emotional_distress ? "Yes" : "No"
+
+.row
+  .col-md-3
+    %p Was your property lost, damaged or stolen?
+  .col-md-9
+    %p= @notice.damages_property ? "Yes" : "No"
+
+
+%p= link_to 'Edit', edit_notice_path(@notice) 
+%p= link_to 'Back', notices_path
+
+.btn= link_to 'Generate PDF', notice_pdf_path(@notice)

@@ -16,6 +16,8 @@ class NoticesController < ApplicationController
   # GET /notices/new
   def new
     @notice = Notice.new
+    @notice.build_physical_injury
+    @notice.build_searched_object
   end
 
   # GET /notices/1/edit
@@ -54,7 +56,6 @@ class NoticesController < ApplicationController
 
   # GET
   def pdf
-    
   end
 
   # DELETE /notices/1
@@ -206,14 +207,20 @@ class NoticesController < ApplicationController
                                    :address, :incident_description,
                                    :incident_location, :incident_occurred_at,
                                    :officer_injured_me,
-                                   {:physical_injury => [:beaten_with_object,
-                                                          :hit_by_police_vehicle,
-                                                          :choked, :pepper_sprayed,
-                                                          :tasered, :attacked_by_police_animal,
-                                                          :physical_force, :handcuffs_too_tight,
-                                                          :other, :other_description]},
+                                   {physical_injury_attributes: [
+                                    :beaten_with_object,
+                                    :hit_by_police_vehicle,
+                                    :choked,
+                                    :pepper_sprayed,
+                                    :tasered,
+                                    :attacked_by_police_animal,
+                                    :physical_force,
+                                    :handcuffs_too_tight,
+                                    :other,
+                                    :other_description 
+                                   ]},
                                    :officer_threatened_injury, :officer_searched,
-                                   {:searched_object => [:vehicle, :bag, :pockets,
+                                   {:searched_object_attributes => [:vehicle, :bag, :pockets,
                                                          :home, :other]},
                                    :officer_took_property, :officer_took_what,
                                    :officer_damaged_property, :officer_damaged_what,
@@ -221,7 +228,7 @@ class NoticesController < ApplicationController
                                    :officer_arrested_no_probable_cause,
                                    :officer_refused_medical_attention,
                                    :none_of_the_above,
-                                   {:number_officers => [:name, :badge_number]},
+                                   :number_officers, {:officers_attributes => [:name, :badge_number]},
                                    :damages_physical_pain, :damages_medical_attention,
                                    :damages_miss_work, :damages_embarrassment,
                                    :damages_emotional_distress, :damages_property)
