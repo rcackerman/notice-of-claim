@@ -1,5 +1,5 @@
 class NoticesController < ApplicationController
-  before_action :set_notice, only: [:show, :edit, :update, :pdf]
+  before_action :set_notice, only: [:show, :edit, :update, :pdf, :verification]
   #before_action :set_notice, only: [:show, :edit, :update, :destroy]
 
   # GET /notices
@@ -57,15 +57,24 @@ class NoticesController < ApplicationController
   # GET
   def pdf
     respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = NoticePDF.new(@notice)
-        send_data pdf.render,
-                  filename: "#{@notice.name}.pdf",
-                  disposition: :inline
-      end
+      format.html { render :pdf }
     end
-    
+    #pdf = NoticePDF.new(@notice)
+    #send_data pdf.render,
+              #filename: "#{@notice.name}.pdf",
+              #type: 'application/pdf',
+              #disposition: :inline
+  end
+
+  def verification
+    respond_to do |format|
+      format.html { render :verification }
+    end
+    #pdf = NoticePDF.new(@notice)
+    #send_data pdf.render,
+              #filename: "#{@notice.name}.pdf",
+              #type: 'application/pdf',
+              #disposition: :inline
   end
 
   # DELETE /notices/1
@@ -110,7 +119,7 @@ class NoticesController < ApplicationController
       details << "Claimant’s property, to wit #{generate_other_objects}, was #{damage} by NYPD officers #{officers}. As a result, claimant was subjected to [Any property claims that apply]."
     end
 
-    details = details.join(' ')
+    @incident_details_text = details.join(' ')
   end
 
 
@@ -129,7 +138,8 @@ class NoticesController < ApplicationController
       officer_text = names_only ? "John Doe" : "Officer John Doe"
     end
     
-    officer_text
+    @officer_text = officer_text
+    @officer_text
   end
 
   def generate_injury_details
@@ -159,12 +169,12 @@ class NoticesController < ApplicationController
         details << "handcuffed too tightly"
       end
 
-      details = "by being #{details.join(', ')}"
+      @injury_details = "by being #{details.join(', ')}"
     else
-      details = ""
+      @injury_details = ""
     end
 
-    details
+    @injury_details
   end
 
   def generate_searched_objects
@@ -188,12 +198,10 @@ class NoticesController < ApplicationController
         objects << @object.other_details
       end
 
-      objects.join(", ")
+      @searched_object_text = objects.join(", ")
     else
-      objects = ""
+      @searched_objects_text = ""
     end
-
-    objects
   end
 
   def generate_other_objects

@@ -161,4 +161,5 @@
 %p= link_to 'Edit', edit_notice_path(@notice) 
 %p= link_to 'Back', notices_path
 
-.btn= link_to 'Generate PDF', notice_pdf_path(@notice)
+.btn= link_to 'Generate Notice of Claim Letter', notice_pdf_path(@notice)
+.btn= link_to 'Generate Verification Letter', verification_path(@notice)

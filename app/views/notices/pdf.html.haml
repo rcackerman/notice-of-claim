@@ -1,0 +1,41 @@
+.row
+  .col-md-12
+    %p ---------------------------------------------------------x
+    %p= @notice.name.upcase
+    %p
+    %p                                                                   	
+    %p               		Claimant,                	
+    %p                                                                    	
+.row
+  .col-md-6
+    %p -versus-			
+  .col-md-6
+    %p NOTICE OF CLAIM
+.row
+  .col-md-12
+    %p THE CITY OF NEW YORK;       		
+    %p OFFICER [JOHN DOE 1],  	       		
+    %p and OFFICER [JOHN DOE 2],			
+    %p              					
+    %p                                                                    	
+    %p Respondents.	          	
+    %p ---------------------------------------------------------x
+    %p 
+    %p TO: THE COMPTROLLER OF THE CITY OF NEW YORK CITY
+    %p 
+    %p   		PLEASE TAKE NOTICE that #{@notice.name} intends to file claims claims will be for damages against the City of New York, #{@officer_text}[, and unnamed Officer(s) (if 3+ is selected)].
+    %p
+    %p.text-center In support of their claims, Claimant states as follows:
+    %p  
+    %p The time, place, and manner in which the claims arose are as follows:
+    %p
+    %p On #{@notice.incident_occurred_at.to_date} at #{@notice.incident_occurred_at.localtime.hour}:#{ @notice.incident_occurred_at.localtime.min} at #{@notice.incident_location}. #{@incident_details_text}
+    %p 
+    %p Claim for personal injuries, [physical], [emotional, mental, and psychological injury, pain and suffering], [actual medical expenses], [embarrassment and humiliation] sustained by claimant as a result of intentional, reckless, and/or negligent behavior on behalf of agents, servants or employees of New York City, the extent of which has not yet been fully determined.
+    %p
+    %p Claimant claims [medical bills, doctor bills], [lost earnings], [damages to personal property], [damages for pain and suffering] and punitive damages, and diverse general and special damages, the exact extent of which has not yet been determined. Claimant also claims legal expenses.. 
+    %p 
+    %p Please take notice that #{@notice.name.upcase}  presents this claim for adjustment and payment and notify Respondents that, unless this claim is adjusted and paid within the time provided by law, they intend to commence an action against Respondents.
+    %p 
+    %p Dated: New York, NY
+    %p     	[DATE OF FILING]
