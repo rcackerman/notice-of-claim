@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   get 'notices/:id/pdf' => 'notices#pdf', as: :notice_pdf
   get 'notices/:id/verification' => 'notices#verification', as: :verification
 
+  get 'about' => 'static#about', as: :about
+  get 'contact' => 'static#contact', as: :contact
+  get 'next_steps' => 'static#next_steps', as: :next_steps
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
