@@ -1,3 +1,26 @@
-%p#notice= notice
+%h3 Notice of Claim - Step 1
 
-%p #{link_to 'Edit', edit_screener_path(@screener)} | #{link_to 'Back', screeners_path}
+.row
+  .col-md-12
+    .alert.alert-warning{role: "alert"}
+      - if screen_claim(@screener.harmed_mistreated, @screener.incident_occurred_on)
+        %p The incident reported qualifies as a notice of claim.
+        %p Please see the associated notice.
+      - else
+        %p The incident reported does not qualify as a notice of claim.
+        %p If you want to create a notice of claim anyway, you can create one #{link_to "here", new_notice_path}.
+.row
+  .col-md-4
+    %p.question Were you harmed or mistreated by the NYPD?
+  .col-md-8
+    %p.answer= @screener.harmed_mistreated ? "Yes" : "No"
+.row
+  .col-md-4
+    %p.question When did the incident happen?
+  .col-md-8
+    %p.answer= @screener.incident_occurred_on.to_date
+
+.row
+  .col-md-12
+    %p.nav-links.pull-right
+      #{link_to 'Edit', edit_screener_path(@screener)} | #{link_to 'Back', screeners_path}
