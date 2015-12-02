@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-%html
+!!!5
 %head
   %title NoticeOfClaim
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
   = javascript_include_tag 'application', 'data-turbolinks-track' => true 
   = csrf_meta_tags 
 
-.container-fluid
+%body
+  %nav.navbar.navbar-default.navbar-fixed-top
+    .container
+      %ul.nav.navbar-nav.pull-right
+        %li= link_to "About", about_path
+        %li= link_to "Contact", contact_path
+        %li= link_to "Start a Notice of Claim", new_screener_path
+
+.container.noc-main
   = yield
+
+%footer.footer
+  .container
+    .row
+      .col-md-12
+        %p Have issues? Submit a #{link_to 'ticket', 'https://github.com/rcackerman/notice-of-claim/issues/new'}
