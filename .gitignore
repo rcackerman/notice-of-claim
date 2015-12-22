@@ -7,6 +7,9 @@
 /test/version_tmp/
 /tmp/
 
+# Assets
+/public/assets
+
 # Environment normalisation:
 /.bundle/
 /vendor/bundle
