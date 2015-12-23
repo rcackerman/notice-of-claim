@@ -133,7 +133,10 @@
         = f.label :none_of_the_above do
           = f.check_box :none_of_the_above
           None of the above
+
+    / officer details
     .form-group
       = f.label :number_officers, "How many officers were involved?", class: "col-sm-2 control-label"
       .col-sm-10
-        = f.number_field :number_officers, in: 0..3, step: 1, class: 'form-control'
+        = f.number_field :number_officers, in: 0..3, step: 1, class: 'form-control', id: 'number-officers'
+        = link_to_add_fields('test', f, 'officers')
