@@ -18,6 +18,7 @@ class NoticesController < ApplicationController
     @notice = Notice.new
     @notice.build_physical_injury
     @notice.build_searched_object
+    3.times { @notice.officers.build }
   end
 
   # GET /notices/1/edit
@@ -88,7 +89,7 @@ class NoticesController < ApplicationController
   #end
 
   def generate_incident_details
-    officers = generate_officers(names_only = true)
+    officers = generate_officers(true)
     details = []
 
     if @notice.officer_arrested_no_probable_cause == true

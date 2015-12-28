@@ -120,6 +120,29 @@
 
 .row
   .col-md-12
+    %h3 Officers Involved
+.row
+  .col-md-3
+    %p How many officers were involved?
+  .col-md-9
+    %p= @notice.number_officers
+- @notice.officers.each.with_index(1) do |o, index|
+  .row
+    .col-md-12
+      %h5 Officer #{index}
+  .row
+    .col-md-3
+      %p Name
+    .col-md-9
+      %p= o.name
+  .row
+    .col-md-3
+      %p Badge number
+    .col-md-9
+      %p= o.badge_number
+
+.row
+  .col-md-12
     %h3 Damages
 .row
   .col-md-3

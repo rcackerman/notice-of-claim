@@ -138,5 +138,11 @@
     .form-group
       = f.label :number_officers, "How many officers were involved?", class: "col-sm-2 control-label"
       .col-sm-10
-        = f.number_field :number_officers, in: 0..3, step: 1, class: 'form-control', id: 'number-officers'
-        = link_to_add_fields('test', f, 'officers')
+        = f.select :number_officers,
+                    [[0, 0], [1, 1], [2, 2], [3, 3], ["more than 3", 4]],
+                    class: 'form-control',
+                    id: 'number-officers'
+        %fieldset#officer-details
+          = f.fields_for :officers do |o|
+            %div{id: "officer-#{o.index + 1}", class: "hidden"}
+              = render(partial: 'notices/form_groups/officer_fields', locals: {f: o})
