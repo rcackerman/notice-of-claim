@@ -1,14 +1,15 @@
 $(function() {
-
-  $('number-officers').change(function() {
-  
-  });
-
-  $('form').on('click', '.add_fields', function(event) {
-    var time = new Date().getTime();
+  $('#notice_number_officers').change(function() {
+    // only ever show 3 officer fieldsets
+    var officers = Math.min(parseInt($('#notice_number_officers').val(), 10), 3);
     var regexp = new RegExp($(this).data('id'), 'g');
-    $(this).before($(this).data('fields').replace(regexp, time));
-    event.preventDefault();
-  });
 
+    console.log(officers);
+
+    for (var i = 0; i < officers; i++) { 
+      var which_officer = "officer-" + (i + 1);
+      event.preventDefault();
+    }
+  });
+  //$(this).after($(this).data('fields').replace(regexp, which_officer));
 });
