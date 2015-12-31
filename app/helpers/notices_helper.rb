@@ -1,33 +1,23 @@
 module NoticesHelper
 
-  INJURY_DETAILS = {
-    "beaten_with_object" => "Beaten with an object",
-    "choked" => "Choked",
-    "pepper_sprayed" => "Pepper sprayed",
-    "tasered" => "Tasered",
-    "attacked_by_police_animal" => "Attacked by a police animal",
-    "hit_by_police_vehicle" => "Hit by a police vehicle",
-    "handcuffs_too_tight" => "Handcuffed too tightly",
-    "physical_force" => "Physical force",
-    "other" => "Other injury"
-  }
-
-  SEARCHED_OBJECTS_DETAILS = {
-    "vehicle" => "Vehicle",
-    "bag" => "Bag",
-    "pockets" => "Pockets",
-    "home" => "Home",
-    "other" => "Other object"
-  }
-
-
-  def map_items detail_array, type
-    if type == 'injury'
-      detail_array.map! { |i| INJURY_DETAILS[i] }
-    elsif type == 'searched objects'
-      detail_array.map! { |i| SEARCHED_OBJECTS_DETAILS[i] }
+  def filter_trues object
+    booleans = get_booleans(object.class)
+    trues = booleans.select do |k,v|
+      object.send(k) == true
     end
-      detail_array
+
+    trues
+  end
+
+  def human_boolean label, boolean_value
+    render "shared/human_boolean", locals: {item_label: label, boolean_value: boolean_value}
   end
  
+  private
+  def get_booleans model
+    booleans = Hash[model.columns.select do |c|
+      c.type == :boolean
+    end.map{ |c| [c.name.to_sym, c.human_name] }]
+  end
+
 end

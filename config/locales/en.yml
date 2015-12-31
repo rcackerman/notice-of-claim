@@ -20,4 +20,48 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      physical_injury:
+        beaten_with_object: "beaten with an object"
+        choked: "choked"
+        pepper_sprayed: "pepper-sprayed"
+        tasered: "tasered"
+        attacked_by_police_animal: "attacked by a police animal"
+        hit_by_police_vehicle: "hit by a police vehicle"
+        handcuffs_too_tight: "handcuffed too tightly"
+        physical_force: "physical force (ie kicked, hit)"
+        other: "other injury"
+      searched_object:
+        vehicle: "vehicle"
+        bag: "bag"
+        pockets: "pockets"
+        home: "home"
+        other: "other object"
+      notice:
+        name: "name"
+        address: "your mailing address"
+        incident_location: "address where the incident took place"
+        incident_occurred_at: "time of the incident"
+        officer_injured_me: "an officer physically injured me"
+        officer_threatened_injury: "an officer threatened to physically injure me"
+        officer_searched: "an officer searched me or my property without my permission"
+        officer_took_property: "an officer took my property"
+        officer_took_what: "what was taken?"
+        officer_damaged_property: "an officer damaged my property"
+        officer_damaged_what: "what was damaged?"
+        officer_destroyed_property: "an officer destroyed my property"
+        officer_destroyed_what: "what was destroyed?"
+        officer_arrested_no_probable_cause: "an officer arrested me without probable cause"
+        officer_refused_medical_attention: "I needed medical attention, but the police refused to provide it"
+        none_of_the_above: "none of the above"
+        number_officers: "number of officers"
+        damages_physical_pain: "physical pain"
+        damages_medical_attention: "medical attention"
+        damages_miss_work: "miss work"
+        damages_embarrassment: "embarrassment or humiliation"
+        damages_property: "property lost, damaged, or stolen"
+        damages_emotional_distress: "emotional distress"
+      officer:
+        name: "officer's name"
+        badge_number: "officer's badge number"
