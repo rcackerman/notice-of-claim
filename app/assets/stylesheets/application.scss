@@ -19,22 +19,3 @@
 @import "bootstrap";
 @import "main";
 
-.noc-main {
-  margin-top: 50px;
-}
-
-.footer {
-  margin-top: 50px;
-  border-top: 2px solid #a9a9a9;
-  background-color: #eee;
-  padding: 25px 0;
-}
-
-.nav-links {
-  margin: 25px 0;
-}
-
-label.required:after {
-  content:" *";
-  color: #d9534f;
-}
