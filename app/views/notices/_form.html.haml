@@ -1,4 +1,4 @@
-= form_for(@notice, data: {}, html: {class: 'form-horizontal'}) do |f|
+= bootstrap_form_for(@notice, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |f|
   - if @notice.errors.any?
     .error_explanation
       %p #{pluralize(@notice.errors.count, "error")} prohibited this notice from being saved:

@@ -1,28 +1,8 @@
-.form-group
-  = label_tag "damages", "Because of the encounter:", class: "col-sm-2 control-label"
-  .col-sm-10
-    %fieldset{id: "damages"}
-      .checkbox
-        = f.label :damages_physical_pain do
-          = f.check_box :damages_physical_pain
-          Did you experience physical pain?
-      .checkbox
-        = f.label :damages_medical_attention do
-          = f.check_box :damages_medical_attention
-          Did you seek medical attention?
-      .checkbox
-        = f.label :damages_miss_work do
-          = f.check_box :damages_miss_work
-          Did you have to miss work?
-      .checkbox
-        = f.label :damages_embarrassment do
-          = f.check_box :damages_embarrassment
-          Did you experience embarrassment or humiliation?
-      .checkbox
-        = f.label :damages_emotional_distress do
-          = f.check_box :damages_emotional_distress
-          Did you experience emotional distress?
-      .checkbox
-        = f.label :damages_property do
-          = f.check_box :damages_property
-          Was your property lost, damaged, or stolen?
+= f.form_group :damages, label: {text: "Because of the encounter:"} do
+  %fieldset{id: "damages"}
+    = f.check_box :damages_physical_pain, label: "Did you experience physical pain?"
+    = f.check_box :damages_medical_attention, label: "Did you seek medical attention?"
+    = f.check_box :damages_miss_work, label: "Did you have to miss work?"
+    = f.check_box :damages_embarrassment, label: "Did you experience embarrassment or humiliation?"
+    = f.check_box :damages_emotional_distress, label: "Did you experience emotional distress?"
+    = f.check_box :damages_property, label: "Was your property lost, damaged, or stolen?"

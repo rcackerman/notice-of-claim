@@ -11,6 +11,8 @@ gem 'haml'
 
 gem 'bootstrap-sass', '3.2.0.2'
 gem 'sass-rails', '>= 3.2'
+gem 'bootstrap_form'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
