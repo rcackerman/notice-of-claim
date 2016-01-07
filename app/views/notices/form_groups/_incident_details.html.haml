@@ -1,7 +1,7 @@
 = f.text_field :incident_location, label: "Incident location"
 
 .form-group
-  = f.label :incident_occurred_at, class: "control-label col-sm-2"
+  = f.label :incident_occurred_at, "Date and Time of the Incident", class: "control-label col-sm-2"
   .col-sm-5
     = f.text_field_without_bootstrap :incident_occurred_at_date, as: :string, class: "form-control"
   .col-sm-5
