@@ -1,4 +1,6 @@
 class Notice < ActiveRecord::Base
+  extend TimeSplitter::Accessors
+
   belongs_to :screener
 
   has_many :officers
@@ -17,4 +19,6 @@ class Notice < ActiveRecord::Base
   validates :address, presence: true
   validates :incident_location, presence: true
   validates :incident_occurred_at, presence: true
+
+  split_accessor :incident_occurred_at
 end

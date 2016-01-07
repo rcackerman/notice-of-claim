@@ -1,5 +1,12 @@
 = f.text_field :incident_location, label: "Incident location"
-= f.text_field :incident_occurred_at, label: "Time of the incident"
+
+.form-group
+  = f.label :incident_occurred_at, class: "control-label col-sm-2"
+  .col-sm-5
+    = f.text_field_without_bootstrap :incident_occurred_at_date, as: :string, class: "form-control"
+  .col-sm-5
+    = f.time_field_without_bootstrap :incident_occurred_at_time, as: :time, class: "form-control"
+
 = f.form_group :outcome_fields, label: {text: "What happened?"} do
   %fieldset#battery-and-assault
     = f.check_box :officer_injured_me

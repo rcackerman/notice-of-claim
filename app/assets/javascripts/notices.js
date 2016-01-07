@@ -1,7 +1,7 @@
 $(function() {
   // datepickers
-  $('#screener_incident_occurred_on').datepicker({
-      container: $("#screener_incident_occurred_on").parent(),
+  $('#notice_incident_occurred_at_date').datepicker({
+      container: $("#notice_incident_occurred_at_date").parent(),
       autoclose: true
   });
 

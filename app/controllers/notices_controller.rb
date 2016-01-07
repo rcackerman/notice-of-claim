@@ -250,7 +250,8 @@ class NoticesController < ApplicationController
                                    :number_officers, {:officers_attributes => [:name, :badge_number]},
                                    :damages_physical_pain, :damages_medical_attention,
                                    :damages_miss_work, :damages_embarrassment,
-                                   :damages_emotional_distress, :damages_property)
+                                   :damages_emotional_distress, :damages_property,
+                                   :incident_occurred_at_date, :incident_occurred_at_time)
     end
 
 end
