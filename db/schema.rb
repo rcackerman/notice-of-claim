@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201011027) do
+ActiveRecord::Schema.define(version: 20160106030952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,10 @@ ActiveRecord::Schema.define(version: 20151201011027) do
     t.boolean  "damages_embarrassment"
     t.boolean  "damages_property"
     t.boolean  "damages_emotional_distress"
+    t.integer  "screener_id"
   end
+
+  add_index "notices", ["screener_id"], name: "index_notices_on_screener_id", using: :btree
 
   create_table "officers", force: :cascade do |t|
     t.string   "name"
@@ -102,6 +105,7 @@ ActiveRecord::Schema.define(version: 20151201011027) do
 
   add_index "searched_objects", ["notice_id"], name: "index_searched_objects_on_notice_id", using: :btree
 
+  add_foreign_key "notices", "screeners"
   add_foreign_key "officers", "notices"
   add_foreign_key "outputs", "notices"
   add_foreign_key "physical_injuries", "notices"
