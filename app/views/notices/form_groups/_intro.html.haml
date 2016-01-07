@@ -1,9 +1,11 @@
+-#- date_from_screener = @notice.
 = f.text_field :name, label: "Your name"
 = f.text_field :address, label: "Your mailing address", class: 'form-control'
 /officer details
 = f.select :number_officers,
             [[0, 0], [1, 1], [2, 2], [3, 3], ["more than 3", 4]],
             {label: "How many officers were involved?"}
+
 %fieldset#officer-details
   = f.fields_for :officers do |o|
     %div{id: "officer-#{o.index + 1}", class: "hidden"}

@@ -1,4 +1,10 @@
 $(function() {
+  // datepickers
+  $('#screener_incident_occurred_on').datepicker({
+      container: $("#screener_incident_occurred_on").parent(),
+      autoclose: true
+  });
+
   $('#notice_number_officers').change(function() {
     // only ever show 3 officer fieldsets
     var officers = Math.min(parseInt($('#notice_number_officers').val(), 10), 3);
@@ -17,5 +23,4 @@ $(function() {
       $("#officer-details > #" + which_officer).removeClass("hidden");
     }
   });
-  //$(this).after($(this).data('fields').replace(regexp, which_officer));
 });

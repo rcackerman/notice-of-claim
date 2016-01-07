@@ -1,5 +1,5 @@
 = f.text_field :incident_location, label: "Incident location"
-= f.datetime_field :incident_occurred_at, label: "Time of the incident"
+= f.text_field :incident_occurred_at, label: "Time of the incident"
 = f.form_group :outcome_fields, label: {text: "What happened?"} do
   %fieldset#battery-and-assault
     = f.check_box :officer_injured_me

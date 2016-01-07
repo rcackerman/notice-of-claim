@@ -1,21 +1,14 @@
-= form_for(@screener, data: {}, html: {class: 'form-horizontal'}) do |f|
+= bootstrap_form_for(@screener, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |f|
   - if @screener.errors.any?
     #error_explanation
       %h3 #{pluralize(@screener.errors.count, "error")} prohibited this screener from being saved:
       %ul
         - @screener.errors.full_messages.each do |message|
           %li= message
-  .form-group
-    = f.label :harmed_mistreated, 'Were you harmed or mistreated by the NYPD?', class: 'col-sm-2 control-label'
-    .col-sm-10
-      = f.select(:harmed_mistreated,
+  = f.select :harmed_mistreated,
           [['Yes', 1], ['No', 2]], {include_blank: true},
-          {class: 'form-control'})
-  .form-group
-    = f.label :incident_occurred_on, 'When did the incident happen?', class: 'col-sm-2 control-label'
-    .col-sm-10
-      = f.date_field :incident_occurred_on, class: 'form-control'
-      -#%label{:for => "incident-date"} When did it happen?
-      -#%input.form-control{type: "date", name: "incident-date", id: "incident-date"}
+          {label: 'Were you harmed or mistreated by the NYPD?'}
+  = f.text_field :incident_occurred_on, label: "When did the incident happen?"
+
   .actions
     = f.submit 'Submit', class: 'btn btn-default'
