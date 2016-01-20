@@ -57,6 +57,9 @@ group :development, :test do
 
   # RSpec for testing
   gem 'rspec-rails', '~> 3.0'
+
+  # FactoryGirl for generating test data
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 gem 'rails_12factor', group: :production
