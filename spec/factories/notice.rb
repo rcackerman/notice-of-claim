@@ -8,6 +8,23 @@ FactoryGirl.define do
     notice
   end
 
+  factory :physical_injury do
+    trait :beaten do
+      beaten_with_object true
+    end
+    trait :multiple_injuries do
+      choked true
+      tasered true
+      hit_by_police_vehicle true
+    end
+    trait :other_injury do
+      other true
+      other_description "poked"
+    end
+    association :notice, factory: :notice_with_physical_injury
+
+  end
+
   factory :notice do
     name "Jane Doe"
     address "Test Address"
@@ -17,6 +34,10 @@ FactoryGirl.define do
     trait :multiple_incidents do
       officer_arrested_no_probable_cause true
       officer_threatened_injury true
+    end
+
+    trait :physical_injury do
+      officer_injured_me true
     end
 
     factory :notice_with_officers do
@@ -37,5 +58,6 @@ FactoryGirl.define do
     end
 
     factory :notice_with_multiple_incident_details, traits: [:multiple_incidents]
+    factory :notice_with_physical_injury, traits: [:physical_injury]
   end
 end

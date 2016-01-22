@@ -4,19 +4,23 @@
     end
 
     def generate_officers name_only=false
-      number_officers = @notice.number_officers
-      
-      if @notice.officers.any?
-        officers = @notice.officers.map { |o| o.name }
-        pad_by = number_officers - officers.length
+      unless @notice.number_officers.nil?
+        number_officers = @notice.number_officers
+        
+        if @notice.officers.any?
+          officers = @notice.officers.map { |o| o.name }
+          pad_by = number_officers - officers.length
+        else
+          pad_by = number_officers
+          officers = Array.new
+        end
+
+        pad_by.times { officers << "John Doe" }
+
+        @officers_text = name_only ? officers.to_sentence : officers.map { |o| "officer #{o}" }.to_sentence
       else
-        pad_by = number_officers
-        officers = Array.new
+        @officers_text = "unknown officer(s)"
       end
-
-      pad_by.times { officers << "John Doe" }
-
-      @officers_text = name_only ? officers.to_sentence : officers.map { |o| "officer #{o}" }.to_sentence
     end
 
     def generate_incident_details
@@ -54,7 +58,7 @@
       incident_details.join(" ")
     end
 
-    def generate_injury_details parsed_injuries
+    def generate_injury_details
       unless @notice.physical_injury.nil?
         details = []
         @injury = @notice.physical_injury

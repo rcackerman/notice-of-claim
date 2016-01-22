@@ -13,13 +13,17 @@ RSpec.describe do
   end
 
   describe "#generate_officers" do
-    let (:notice_without_officers) { FactoryGirl.create(:notice, number_officers:2) }
+    let (:notice_without_officers) { FactoryGirl.create(:notice) }
     let (:notice_with_unnamed_officers) { FactoryGirl.create(:notice_with_officers, number_officers:1, officers_count: 0) }
     let (:notice_with_named_and_unnamed_officers) { FactoryGirl.create(:notice_with_officers, officers_count: 1) }
     let (:notice_with_named_officers) { FactoryGirl.create(:notice_with_officers) }
 
     context "no number of officers selected" do
-      pending "it should output Unnamed Officer(s), probably"
+      it "should show that all officers are unknown" do
+        lg = NoticeTextCreator.new notice_without_officers
+        officer_text = lg.generate_officers names_only='t'
+        expect(officer_text).to eq("unknown officer(s)")
+      end
     end
 
     context "number of officers selected" do
@@ -88,14 +92,35 @@ RSpec.describe do
         end
       end
 
-      context "officer_injured_me" do
+      context "officer_injured_me is true" do
         it "should include injury text" do
           details = prep_text_generator(:officer_injured_me).generate_incident_details
           expect(details).to match(/suffered a battery/)
         end
 
-        it "should generate injury details" do
+        context "and there are injury details" do
+          let(:details) { FactoryGirl.create(:physical_injury, :multiple_injuries) }
+
+          it "should generate injury details" do
+            lg = NoticeTextCreator.new details.notice
+            injury_detail_text = lg.generate_incident_details
+            expect(injury_detail_text).to match(/by being choked.+tasered.+hit by police vehicle/)
+          end
+
+          context "one injury detail is 'other'" do
+            pending "not yet"
+          end
         end
+
+        context "and there are no injury details" do
+          it "should not have a double space" do
+            details = prep_text_generator(:officer_injured_me).generate_incident_details
+            expect(details).to_not match('/  /')
+          end
+        end
+
+        # TODO: model validation that officer_injured_me must be true if
+        # injury details are true
       end
 
       context "officer_threatened_injury" do
