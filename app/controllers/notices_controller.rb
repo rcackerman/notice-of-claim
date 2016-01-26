@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   #include NoticeLetter
-  before_action :set_notice, only: [:show, :edit, :update, :notice, :verification]
+  before_action :set_notice, only: [:show, :edit, :update, :notice_of_claim, :verification]
   #before_action :set_notice, only: [:show, :edit, :update, :destroy]
 
   # GET /notices
@@ -56,12 +56,11 @@ class NoticesController < ApplicationController
     end
   end
 # GET
-  def notice 
+  def notice_of_claim 
     #notice_text_generator = NoticeLetter::NoticeTextCreator.new(@notice)
     #injuries = 
     respond_to do |format|
-      format.html { render :notice }
-      format.docx { render :notice }
+      format.docx {  headers["Content-Disposition"] = "attachment; filename=\"caracal.docx\"" }
     end
   end
 

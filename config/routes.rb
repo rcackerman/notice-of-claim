@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :notices
 
-  get 'notices/:id/pdf' => 'notices#pdf', as: :notice_pdf
+  get 'notices/:id/notice_of_claim' => 'notices#notice_of_claim', format: 'docx'
   get 'notices/:id/verification' => 'notices#verification', as: :verification
 
   get 'about' => 'static#about', as: :about
