@@ -108,12 +108,15 @@ RSpec.describe do
           end
 
           context "one injury detail is 'other'" do
-            pending "not yet"
+            pending "should print out text entered"
+            pending "should not print out the boolean"
           end
         end
 
         context "and there are no injury details" do
           it "should not have a double space" do
+            # TODO: this test is actually a lie - if it finds any
+            # single space it'll pass.
             details = prep_text_generator(:officer_injured_me).generate_incident_details
             expect(details).to_not match('/  /')
           end
@@ -136,23 +139,42 @@ RSpec.describe do
           expect(details).to match(/illegal search/)
         end
 
-        it "should look up what was searched" do
-        end
+        pending "it should look up what was searched"
       end
 
       context "officer_took_property or officer_damaged_property or officer_destroyed_property" do
         it "should include taken property text once" do
           notice = FactoryGirl.create(:notice, officer_took_property: true, officer_damaged_property: true, officer_destroyed_property: true)
-          expect(details).to match(/Claimaint's property/).and not_to match(/claimant was subjected to.+Claimaint's property/)
+          details = NoticeTextCreator.new(notice).generate_incident_details
+          expect(details).to match(/Claimant’s property/)
+          expect(details).to_not match(/claimant was subjected to.+Claimaint's property/)
         end
 
-        context "something was seized" do
+        context "and something was seized" do
+
+          it "should say something was seized" do
+
+
+          end
+
+          it "should not say something was taken" do
+
+          end
         end
 
-        context "something was taken" do
+        context "and something was taken" do
+          it "should say something was taken" do
+
+          end
+          it "should not say something was seized" do
+
+          end
         end
 
-        context "something was both seized and damaged" do
+        context "and something was both seized and damaged" do
+          it "should say so, but only once" do
+
+          end
         end
 
         context "multiple, overlapping things were taken or destroyed" do

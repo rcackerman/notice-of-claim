@@ -25,6 +25,21 @@ FactoryGirl.define do
 
   end
 
+  factory :searched_object do
+    trait :multiple_objects do
+      bag true
+      home true
+    end
+    trait :one_object do
+      pockets true
+    end
+    trait :other_object do
+      other true
+      other_description "mailbox"
+    end
+    notice
+  end
+
   factory :notice do
     name "Jane Doe"
     address "Test Address"
@@ -38,6 +53,9 @@ FactoryGirl.define do
 
     trait :physical_injury do
       officer_injured_me true
+    end
+    trait :searched_object do
+      officer_searched true
     end
 
     factory :notice_with_officers do
@@ -59,5 +77,10 @@ FactoryGirl.define do
 
     factory :notice_with_multiple_incident_details, traits: [:multiple_incidents]
     factory :notice_with_physical_injury, traits: [:physical_injury]
+    factory :notice_with_searched_object, traits: [:searched_object] do
+      after(:build) do |notice, evaluator|
+        create_list(:searched_object, traits: [:multiple_objects], notice: notice)
+      end
+    end
   end
 end
