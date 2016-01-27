@@ -1,3 +1,4 @@
+officers_list = generate_officers name_only='true'
 docx.hr
 docx.p @notice.name.upcase
 
@@ -25,14 +26,65 @@ docx.hr
 
 docx.p 'TO: THE COMPTROLLER OF THE CITY OF NEW YORK CITY'
 
-# docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims claims will be for damages against the City of New York, #{@officer_text}[, and unnamed Officer(s) (if 3+ is selected)]."
-# docx.p "In support of their claims, Claimant states as follows:"
-# docx.p "The time, place, and manner in which the claims arose are as follows:"
-# docx.p "On #{@notice.incident_occurred_at.to_date} at #{@notice.incident_occurred_at.localtime.hour}:#{ @notice.incident_occurred_at.localtime.min} at #{@notice.incident_location}. #{@incident_details_text}"
-# 
-# docx.p "Claim for personal injuries, [physical], [emotional, mental, and psychological injury, pain and suffering], [actual medical expenses], [embarrassment and humiliation] sustained by claimant as a result of intentional, reckless, and/or negligent behavior on behalf of agents, servants or employees of New York City, the extent of which has not yet been fully determined."
-# docx.p "Claimant claims [medical bills, doctor bills], [lost earnings], [damages to personal property], [damages for pain and suffering] and punitive damages, and diverse general and special damages, the exact extent of which has not yet been determined. Claimant also claims legal expenses."
-# docx.p "Please take notice that #{@notice.name.upcase} presents this claim for adjustment and payment and notify Respondents that, unless this claim is adjusted and paid within the time provided by law, they intend to commence an action against Respondents."
-# 
-# docx.p "Dated: New York, NY"
-# docx.p "[DATE OF FILING]"
+docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims claims will be for damages against the City of New York, #{@officer_text}[, and unnamed Officer(s) (if 3+ is selected)]."
+docx.p "In support of their claims, Claimant states as follows:"
+docx.p "The time, place, and manner in which the claims arose are as follows:"
+docx.p do
+  text "On #{@notice.incident_occurred_at.to_date} at #{@notice.incident_occurred_at.localtime.hour}:#{ @notice.incident_occurred_at.localtime.min} at #{@notice.incident_location}."
+  if @notice.officer_arrested_no_probable_cause == true
+      text "Claimant was subjected to false arrest and false imprisonment by NYPD officers #{officers_list.titleize}."
+  end
+  if @notice.officer_injured_me == true
+    text "Claimant suffered a battery and was subjected to excessive force "
+    text generate_injury_details
+    text " at the hands of NYPD officers #{officers_list.titleize}."
+  end
+  if @notice.officer_threatened_injury == true
+    text "Claimant was subjected to an assault by NYPD officers #{officers_list.titleize}."
+  end
+
+  if @notice.officer_searched == true
+    text "Claimant was subjected to an illegal search of their property when NYPD officers #{officers_list.titleize} searched their 
+    text generate_searched_objects
+    text "."
+  end
+
+  if @notice.officer_took_property == true || @notice.officer_damaged_property == true || @notice.officer_destroyed_property == true
+    text "Claimant’s property, to wit 
+    text generate_other_objects
+    text ", was "
+    if @notice.officer_took_property == true and @notice.officer_damaged_property != true
+      text "seized"
+    elsif @notice.officer_took_property != false and @notice.officer_damaged_property == true
+      text "damaged"
+    else
+      text "both seized and damaged"
+    end
+    text " by NYPD officers #{officers_list.titleize}. As a result, claimant was subjected to"
+    text generate_lost_objects
+    text "."
+  end
+end
+ 
+docx.p do
+  text "Claim for personal injuries, "
+  text @notice.damages_physical_pain == 'true' ? "physical, "
+  text @notice.damages_emotional_distress == 'true' ? "emotional, mental, and psychological"
+  text " injury, pain and suffering"
+  text @notice.damages_medical_attention == 'true' ? ", actual medical expenses"
+  text @notice.damages_embarrassment == 'true' ? ", embarrassment and humiliation"
+  text " sustained by claimant as a result of intentional, reckless, and/or negligent behavior on behalf of agents, servants or employees of New York City, the extent of which has not yet been fully determined."
+end
+
+docx.p do
+  text "Claimant claims "
+  text @notice.damages_medical_attention == 'true' ? "medical bills, doctor bills"
+  text @notice.damages_miss_work == 'true' ? ", lost earnings"
+  text @notice.damages_property == 'true' ? ", damages to personal property"
+  text @notice.damages_emotional_distress == 'true' ? ", damages for pain and suffering"
+  text "and punitive damages, and diverse general and special damages, the exact extent of which has not yet been determined. Claimant also claims legal expenses."
+end
+docx.p "Please take notice that #{@notice.name.upcase} presents this claim for adjustment and payment and notify Respondents that, unless this claim is adjusted and paid within the time provided by law, they intend to commence an action against Respondents."
+
+docx.p "Dated: New York, NY"
+docx.p "[DATE OF FILING]"
