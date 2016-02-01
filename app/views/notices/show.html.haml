@@ -129,5 +129,5 @@
     %p.nav-links.pull-right
       #{link_to 'Edit', edit_notice_path(@notice)} | #{link_to 'Back', notices_path}
 
-.btn= link_to 'Generate Notice of Claim Letter', notice_pdf_path(@notice)
+.btn= link_to 'Generate Notice of Claim Letter', letter_path(@notice)
 .btn= link_to 'Generate Verification Letter', verification_path(@notice)
