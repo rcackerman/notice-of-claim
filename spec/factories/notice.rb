@@ -1,45 +1,4 @@
 FactoryGirl.define do
-  sequence :officer_name do |n|
-    "Bob #{n}"
-  end
-
-  factory :officer do
-    name { generate(:officer_name) }
-    notice
-  end
-
-  factory :physical_injury do
-    trait :beaten do
-      beaten_with_object true
-    end
-    trait :multiple_injuries do
-      choked true
-      tasered true
-      hit_by_police_vehicle true
-    end
-    trait :other_injury do
-      other true
-      other_description "poked"
-    end
-    association :notice, factory: :notice_with_physical_injury
-
-  end
-
-  factory :searched_object do
-    trait :multiple_objects do
-      bag true
-      home true
-    end
-    trait :one_object do
-      pockets true
-    end
-    trait :other_object do
-      other true
-      other_description "mailbox"
-    end
-    notice
-  end
-
   factory :notice do
     name "Jane Doe"
     address "Test Address"
@@ -56,6 +15,12 @@ FactoryGirl.define do
     end
     trait :searched_object do
       officer_searched true
+    end
+    trait :taken_object do
+      officer_took_property true
+    end
+    trait :damaged_object do
+      officer_damaged_property true
     end
 
     factory :notice_with_officers do
@@ -77,10 +42,16 @@ FactoryGirl.define do
 
     factory :notice_with_multiple_incident_details, traits: [:multiple_incidents]
     factory :notice_with_physical_injury, traits: [:physical_injury]
-    factory :notice_with_searched_object, traits: [:searched_object] do
-      after(:build) do |notice, evaluator|
-        create_list(:searched_object, traits: [:multiple_objects], notice: notice)
-      end
+    factory :notice_with_searched_objects, traits: [:searched_object]
+
+    factory :notice_with_lost_objects do
+      officer_took_property true
+      officer_damaged_property true
+      officer_destroyed_property true
+      
+      officer_took_what "my banjo"
+      officer_damaged_what "my CD collection"
+      officer_destroyed_what "my CD collection"
     end
   end
 end

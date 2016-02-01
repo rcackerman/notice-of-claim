@@ -1,83 +1,67 @@
 module NoticesHelper
-  def generate_officers number_officers, officers_list, name_only=false
-    number_officers = number_officers || 0
-    if officers_list.any?
+  include ApplicationHelper
+  #def generate_officers number_officers, officers_list, name_only=false
+  def generate_officers notice, name_only=false
+    number_officers = notice.number_officers || 0
+    officers_list = notice.officers || Array.new
+
+    if number_officers == 0
+      officers_text = "unknown officer(s)"
+    else 
       officers = officers_list.map { |o| o.name }
       pad_by = number_officers - officers_list.length
-    else
-      pad_by = number_officers
-      officers = Array.new
+      officers = pad(pad_by, officers, "John Doe")
+      officers_text = name_only ? officers.to_sentence : officers.map { |o| "officer #{o}" }.to_sentence
     end
 
-      pad_by.times { officers << "John Doe" }
-
-      @officers_text = name_only ? officers.to_sentence : officers.map { |o| "officer #{o}" }.to_sentence
-    else
-      @officers_text = "unknown officer(s)"
-    end
+    officers_text
   end
 
-  def generate_incident_details model_trues
-    officers_list = generate_officers
-    incident_details = Array.new
+  def pick_if_seized_damaged notice
+    taken = notice.officer_took_property || false
+    damaged = notice.officer_damaged_property || false
 
-    if @notice.officer_arrested_no_probable_cause == true
-      incident_details << "Claimant was subjected to false arrest and false imprisonment by NYPD officers #{officers_list.titleize}."
+    if taken and !damaged
+      damage = "seized"
+    elsif !taken and damaged
+      damage = "damaged"
+    else
+      damage = "both seized and damaged"
     end
 
-    if @notice.officer_injured_me == true
-      incident_details << "Claimant suffered a battery and was subjected to excessive force #{generate_injury_details} at the hands of NYPD officers #{officers_list.titleize}."
-    end
-
-    if @notice.officer_threatened_injury == true
-      incident_details << "Claimant was subjected to an assault by NYPD officers #{officers_list.titleize}."
-    end
-
-    if @notice.officer_searched == true
-      objects = generate_searched_objects
-      incident_details << "Claimant was subjected to an illegal search of their property when NYPD officers #{officers_list.titleize} searched their #{objects}."
-    end
-
-    if @notice.officer_took_property == true || @notice.officer_damaged_property == true || @notice.officer_destroyed_property == true
-      if @notice.officer_took_property == true and @notice.officer_damaged_property != true
-        damage = "seized"
-      elsif @notice.officer_took_property != false and @notice.officer_damaged_property == true
-        damage = "damaged"
-      else
-        damage = "both seized and damaged"
-      end
-      incident_details << "Claimant’s property, to wit #{generate_other_objects}, was #{damage} by NYPD officers #{officers_list}. As a result, claimant was subjected to [Any property claims that apply]."
-    end
-
-    incident_details.join(" ")
+    damage
   end
 
-  def generate_injury_details notice
-    model_trues
-      details = Array.new
-      model_trues.each do |i|
-        details << i
-      end
-      
-      return "by being #{details.to_sentence}"
-
+  def generate_injury_details model_trues
+    details = Array.new
+    model_trues.each do |k, v|
+      details << v.downcase
+    end
+    
+    return "by being #{details.to_sentence}"
   end
 
   def generate_searched_objects model_trues
     objects = Array.new
-    model_trues.each do |i|
-      objects << i
+    model_trues.each do |k, v|
+      objects << v.downcase
     end
     objects.to_sentence
-end
-
-  def generate_lost_objects
-    # for seized or damaged property
-    objects = [@notice.officer_took_what,
-                @notice.officer_damaged_what,
-                @notice.officer_destroyed_what].uniq.compact
-    objects.join(", ")
-    objects
   end
 
+  def generate_lost_objects notice
+    # for seized or damaged property
+    objects = [notice.officer_took_what,
+                notice.officer_damaged_what,
+                notice.officer_destroyed_what].uniq.compact
+    objects.to_sentence
+  end
+
+  private
+
+  def pad(by, in_list, text)
+    out_list = in_list || Array.new
+    by.times { out_list << text }
+    out_list
+  end
 end
