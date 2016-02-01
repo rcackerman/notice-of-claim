@@ -12,60 +12,6 @@ RSpec.describe do
     end
   end
 
-  describe "#generate_officers" do
-    let (:notice_without_officers) { FactoryGirl.create(:notice) }
-    let (:notice_with_unnamed_officers) { FactoryGirl.create(:notice_with_officers, number_officers:1, officers_count: 0) }
-    let (:notice_with_named_and_unnamed_officers) { FactoryGirl.create(:notice_with_officers, officers_count: 1) }
-    let (:notice_with_named_officers) { FactoryGirl.create(:notice_with_officers) }
-
-    context "no number of officers selected" do
-      it "should show that all officers are unknown" do
-        lg = NoticeTextCreator.new notice_without_officers
-        officer_text = lg.generate_officers names_only='t'
-        expect(officer_text).to eq("unknown officer(s)")
-      end
-    end
-
-    context "number of officers selected" do
-      context "officers have data entered" do
-        it "should use real names" do
-          lg = NoticeTextCreator.new notice_with_named_officers
-          officer_text = lg.generate_officers names_only='t'
-          expect(officer_text).to match(/Bob [0-9]+ and Bob [0-9]+/)
-        end
-      end
-
-      context "officers have no data entered" do
-        it "should use placeholders for names" do
-          lg = NoticeTextCreator.new notice_with_unnamed_officers
-          officer_text = lg.generate_officers names_only=true
-          expect(officer_text).to eq("John Doe")
-        end
-
-        it "should use placeholders for all un-entered officers" do
-          lg = NoticeTextCreator.new FactoryGirl.create(:notice, number_officers: 2)
-          officer_text = lg.generate_officers names_only=true
-          expect(officer_text).to eq("John Doe and John Doe")
-        end
-
-        context "some officers have data entered" do
-          it "should use real names and placeholder names" do
-            lg = NoticeTextCreator.new notice_with_named_and_unnamed_officers
-            officer_text = lg.generate_officers names_only='t'
-            expect(officer_text).to match(/Bob [0-9]+ and John Doe/)
-          end
-        end
-      end
-
-      context "names_only is false" do
-        it "should have the word officer" do
-          lg = NoticeTextCreator.new notice_with_named_officers
-          officer_text = lg.generate_officers names_only=false
-          expect(officer_text).to start_with("officer")
-        end
-      end
-
-    end
 
     describe "#generate_incident_details" do
       def prep_text_generator incident_type
@@ -98,33 +44,6 @@ RSpec.describe do
           expect(details).to match(/suffered a battery/)
         end
 
-        context "and there are injury details" do
-          let(:details) { FactoryGirl.create(:physical_injury, :multiple_injuries) }
-
-          it "should generate injury details" do
-            lg = NoticeTextCreator.new details.notice
-            injury_detail_text = lg.generate_incident_details
-            expect(injury_detail_text).to match(/by being choked.+tasered.+hit by police vehicle/)
-          end
-
-          context "one injury detail is 'other'" do
-            pending "should print out text entered"
-            pending "should not print out the boolean"
-          end
-        end
-
-        context "and there are no injury details" do
-          it "should not have a double space" do
-            # TODO: this test is actually a lie - if it finds any
-            # single space it'll pass.
-            details = prep_text_generator(:officer_injured_me).generate_incident_details
-            expect(details).to_not match('/  /')
-          end
-        end
-
-        # TODO: model validation that officer_injured_me must be true if
-        # injury details are true
-      end
 
       context "officer_threatened_injury" do
         it "should include threatened injury text" do
