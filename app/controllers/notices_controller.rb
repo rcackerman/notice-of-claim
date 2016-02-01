@@ -55,10 +55,9 @@ class NoticesController < ApplicationController
       end
     end
   end
-# GET
+  
+  # GET
   def notice_of_claim 
-    #notice_text_generator = NoticeLetter::NoticeTextCreator.new(@notice)
-    #injuries = 
     respond_to do |format|
       format.docx {  headers["Content-Disposition"] = "attachment; filename=\"caracal.docx\"" }
     end
