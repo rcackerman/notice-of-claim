@@ -6,7 +6,7 @@
         - @screener.errors.full_messages.each do |message|
           %li= message
   = f.select :harmed_mistreated,
-          [['Yes', 1], ['No', 2]], {include_blank: true},
+          [['Yes', true], ['No', false]], {include_blank: true},
           {label: 'Were you harmed or mistreated by the NYPD?'}
   = f.text_field :incident_occurred_on, label: "When did the incident happen?"
 
