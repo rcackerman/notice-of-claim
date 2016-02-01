@@ -30,7 +30,9 @@ RSpec.describe NoticesHelper, type: :helper do
         it "should use real names" do
           officer_text = helper.generate_officers(notice_with_named_officers,
                                                   name_only=true)
-          expect(officer_text).to match(/Bob [0-9]+ and Bob [0-9]+/)
+          expect(officer_text).to contain_exactly(
+            a_string_matching(/Bob [0-9]+/),
+            a_string_matching(/Bob [0-9]+/))
         end
       end
 
@@ -38,21 +40,23 @@ RSpec.describe NoticesHelper, type: :helper do
         it "should use placeholders for names" do
           officer_text = helper.generate_officers(notice_with_unnamed_officers,
                                                   name_only=true)
-          expect(officer_text).to eq("John Doe")
+          expect(officer_text).to contain_exactly("John Doe")
         end
 
         it "should use placeholders for all un-entered officers" do
           notice = FactoryGirl.create(:notice, number_officers: 2)
           officer_text = helper.generate_officers(notice,
                                                   name_only=true)
-          expect(officer_text).to eq("John Doe and John Doe")
+          expect(officer_text).to contain_exactly("John Doe", "John Doe")
         end
 
         context "some officers have data entered" do
           it "should use real names and placeholder names" do
             officer_text = helper.generate_officers(notice_with_named_and_unnamed_officers,
                                                 name_only=true)
-            expect(officer_text).to match(/Bob [0-9]+ and John Doe/)
+            expect(officer_text).to contain_exactly(
+              a_string_matching(/Bob [0-9]+/),
+              a_string_matching(/John Doe/))
           end
         end
       end
@@ -61,7 +65,9 @@ RSpec.describe NoticesHelper, type: :helper do
     context "name_only is false" do
       it "should have the word officer" do
         officer_text = helper.generate_officers(notice_with_named_officers)
-        expect(officer_text).to start_with("officer")
+        expect(officer_text).to contain_exactly(
+          a_string_starting_with("officer"),
+          a_string_starting_with("officer"))
       end
     end
 
@@ -70,17 +76,19 @@ RSpec.describe NoticesHelper, type: :helper do
   describe "#generate_injury_details" do
 
     context "there are injury details" do
-      let(:details) { FactoryGirl.create(:physical_injury, :multiple_injuries) }
+      let (:details) { FactoryGirl.create(:physical_injury, :multiple_injuries) }
+      let (:other_details) { FactoryGirl.create(:physical_injury, :multiple_injuries, :other_injury) }
 
       it "should generate injury details" do
-        injury_details = helper.filter_trues(details)
-        injury_detail_text = helper.generate_injury_details(injury_details)
+        injury_detail_text = helper.generate_injury_details(details)
         expect(injury_detail_text).to match(/by being choked, tasered, and hit by police vehicle/)
       end
 
       context "one injury detail is 'other'" do
-        pending "should print out text entered"
-        pending "should not print out the boolean"
+        it "should print out text entered with no boolean" do
+          injury_detail_text = helper.generate_injury_details(other_details)
+          expect(injury_detail_text).to match(/choked, tasered, hit by police vehicle, and poked/)
+        end
       end
     end
 
@@ -103,20 +111,18 @@ RSpec.describe NoticesHelper, type: :helper do
       let (:other_searched_objects) { FactoryGirl.create :searched_object, :multiple_objects, :other_object }
 
       it "should print out objects" do
-        objects = helper.filter_trues(searched_objects)
-        so = helper.generate_searched_objects(objects)
+        so = helper.generate_searched_objects(searched_objects)
         expect(so).to match(/vehicle, bag, and pockets/)
       end
 
-      it "should print out 'other objects' user input" do
-        objects = helper.filter_trues(other_searched_objects)
-        so = helper.generate_searched_objects(objects)
+      it "should print out 'other objects' user input without boolean" do
+        so = helper.generate_searched_objects(other_searched_objects)
         expect(so).to match(/vehicle, bag, pockets, and my dollhouse/)
       end
     end
 
     context "there are no objects" do
-      pending "waiting on input"
+      pending "- waiting on input"
     end
   end
 
@@ -155,6 +161,27 @@ RSpec.describe NoticesHelper, type: :helper do
         lost_objects = helper.generate_lost_objects (notice)
         expect(lost_objects).to eq("my banjo and my CD collection")
       end
+    end
+
+    context "nothing was entered" do
+      pending "- wait for input"
+    end
+  end
+
+  describe "#generate_injury_claims" do
+    let (:notice_with_damages) { FactoryGirl.create :notice, :multiple_incidents, :multiple_damage_claims }
+    it "should print all claims" do
+      injury_claims = helper.generate_injury_claims(notice_with_damages)
+      expect(injury_claims).to match(/physical and actual medical expenses/)
+    end
+  end
+
+  describe "#generate_monetary_claims" do
+    let (:notice_with_damages) { FactoryGirl.create :notice, :multiple_incidents, :multiple_damage_claims }
+    it "should print all claims" do
+      injury_claims = helper.generate_monetary_claims(notice_with_damages)
+      expect(injury_claims).to match(
+        /medical bills, doctor bills, damages to personal property/)
     end
   end
 

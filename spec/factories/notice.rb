@@ -22,6 +22,11 @@ FactoryGirl.define do
     trait :damaged_object do
       officer_damaged_property true
     end
+    trait :multiple_damage_claims do
+      damages_physical_pain true
+      damages_medical_attention true
+      damages_property true
+    end
 
     factory :notice_with_officers do
       number_officers 2

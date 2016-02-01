@@ -6,12 +6,12 @@ module NoticesHelper
     officers_list = notice.officers || Array.new
 
     if number_officers == 0
-      officers_text = "unknown officer(s)"
+      officers_text = ["unknown officer(s)"]
     else 
       officers = officers_list.map { |o| o.name }
       pad_by = number_officers - officers_list.length
       officers = pad(pad_by, officers, "John Doe")
-      officers_text = name_only ? officers.to_sentence : officers.map { |o| "officer #{o}" }.to_sentence
+      officers_text = name_only ? officers : officers.map { |o| "officer #{o}" }
     end
 
     officers_text
@@ -32,20 +32,28 @@ module NoticesHelper
     damage
   end
 
-  def generate_injury_details model_trues
+  def generate_injury_details object
+    model_trues = filter_trues(object).except(:other)
+
     details = Array.new
     model_trues.each do |k, v|
       details << v.downcase
     end
+
+    details << object.other_description if !object.other_description.blank?
     
     return "by being #{details.to_sentence}"
   end
 
-  def generate_searched_objects model_trues
+  def generate_searched_objects object
+    model_trues = filter_trues(object).except(:other)
+
     objects = Array.new
     model_trues.each do |k, v|
       objects << v.downcase
     end
+
+    objects << object.other_details if !object.other_details.blank?
     objects.to_sentence
   end
 
@@ -57,11 +65,56 @@ module NoticesHelper
     objects.to_sentence
   end
 
+  def generate_injury_claims notice
+    damages = filter_claims(filter_trues(notice), "damages")
+    damages_text = Array.new
+    if damages.include? :damages_physical_pain
+      damages_text << "physical"
+    end
+    if damages.include? :damages_emotional_distress or damages.include? :damages_embarrassment
+      damages_text << "emotional, mental, and psychological injury, pain and suffering"
+    end
+    if damages.include? :damages_medical_attention
+      damages_text << "actual medical expenses"
+    end
+    if damages.include? :damages_embarrassment
+      damages_text << "embarrassment and humiliation"
+    end
+
+    damages_text.to_sentence
+  end
+
+  def generate_monetary_claims notice
+    damages = filter_claims(filter_trues(notice), "damages")
+    damages_text = Array.new
+    if damages.include? :damages_medical_attention
+      damages_text << "medical bills"
+      damages_text << "doctor bills"
+    end
+    if damages.include? :damages_miss_work
+      damages_text << "lost earnings"
+    end
+    if damages.include? :damages_property
+      damages_text << "damages to personal property"
+    end
+    if damages.include? :damages_emotional_distress or damages.include? :damages_embarrassment
+      damages_text << "damages for pain and suffering"
+    end
+
+    damages_text.join(", ")
+    # there's an "and" after this generated text, so use join only
+  end
+
   private
 
   def pad(by, in_list, text)
     out_list = in_list || Array.new
     by.times { out_list << text }
     out_list
+  end
+
+  def filter_claims(hash, to_match)
+    claims = hash.keys.select { |key| key.to_s.match(/^#{to_match}.+/) }
+    claims
   end
 end
