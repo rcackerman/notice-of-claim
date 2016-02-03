@@ -21,7 +21,7 @@ RSpec.describe NoticesHelper, type: :helper do
       it "should show that all officers are unknown" do
         officers = helper.generate_officers(notice_without_officers,
                                             name_only=true)
-        expect(officers).to eq("unknown officer(s)")
+        expect(officers).to eq(["unknown officer(s)"])
       end
     end
 
@@ -182,6 +182,37 @@ RSpec.describe NoticesHelper, type: :helper do
       injury_claims = helper.generate_monetary_claims(notice_with_damages)
       expect(injury_claims).to match(
         /medical bills, doctor bills, damages to personal property/)
+    end
+  end
+
+  describe "#pick_property_claim_type" do
+    context "police took objects" do
+      let (:notice) { FactoryGirl.create :notice, :taken_object }
+      it "should print correct claim type" do
+        property_claim = helper.pick_property_claim_type notice
+        expect(property_claim).to match(/unlawful seizure and conversion/)
+      end
+    end
+    context "police damaged objects" do
+      let (:notice) { FactoryGirl.create :notice, :damaged_object }
+      it "should print correct claim type" do
+        property_claim = helper.pick_property_claim_type notice
+        expect(property_claim).to match(/trespass to chattels/)
+      end
+    end
+    context "police destroyed objects" do
+      let (:notice) { FactoryGirl.create :notice, officer_destroyed_property: true }
+      it "should print correct claim type" do
+        property_claim = helper.pick_property_claim_type notice
+        expect(property_claim).to match(/conversion/)
+      end
+    end
+    context "police did multiple things to objects" do
+      let (:notice) { FactoryGirl.create :notice, officer_damaged_property: true, officer_destroyed_property: true }
+      it "should print all applicable claim types" do
+        property_claim = helper.pick_property_claim_type notice
+        expect(property_claim).to match(/trespass to chattels.+conversion/)
+      end
     end
   end
 

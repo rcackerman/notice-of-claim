@@ -65,6 +65,21 @@ module NoticesHelper
     objects.to_sentence
   end
 
+  def pick_property_claim_type notice
+    claims = Array.new
+    if notice.officer_took_property
+      claims << "unlawful seizure and conversion"
+    end
+    if notice.officer_damaged_property
+      claims << "trespass to chattels"
+    end
+    if notice.officer_destroyed_property
+      claims << "conversion"
+    end
+
+    claims.to_sentence
+  end
+
   def generate_injury_claims notice
     damages = filter_claims(filter_trues(notice), "damages")
     damages_text = Array.new

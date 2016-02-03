@@ -47,10 +47,10 @@ if @notice.officer_searched == true
 end
 
 if @notice.officer_took_property == true || @notice.officer_damaged_property == true || @notice.officer_destroyed_property == true
-  text "Claimant’s property, to wit #{generate_lost_objects @notice}, was #{pick_if_seized_damaged @notice} by NYPD officers #{officers_list.to_sentence.titleize}. As a result, claimant was subjected to [property damages]."
+  docx.p "Claimant’s property, to wit #{generate_lost_objects @notice}, was #{pick_if_seized_damaged @notice} by NYPD officers #{officers_list.to_sentence.titleize}. As a result, claimant was subjected to #{pick_property_claim_type @notice}"
 end
  
-doc.p "Claim for personal injuries, #{generate_injury_claims @notice} sustained by claimant as a result of intentional, reckless, and/or negligent behavior on behalf of agents, servants or employees of New York City, the extent of which has not yet been fully determined."
+docx.p "Claim for personal injuries, #{generate_injury_claims @notice} sustained by claimant as a result of intentional, reckless, and/or negligent behavior on behalf of agents, servants or employees of New York City, the extent of which has not yet been fully determined."
 
 docx.p "Claimant claims #{generate_monetary_claims @notice} and punitive damages, and diverse general and special damages, the exact extent of which has not yet been determined. Claimant also claims legal expenses."
 

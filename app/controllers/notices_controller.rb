@@ -59,7 +59,7 @@ class NoticesController < ApplicationController
   # GET
   def notice_of_claim 
     respond_to do |format|
-      format.docx {  headers["Content-Disposition"] = "attachment; filename=\"caracal.docx\"" }
+      format.docx { headers["Content-Disposition"] = "attachment; filename=\"caracal.docx\"" }
     end
   end
 
