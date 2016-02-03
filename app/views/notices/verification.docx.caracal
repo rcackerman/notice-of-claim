@@ -1,0 +1,51 @@
+officers_list = generate_officers(@notice, name_only=true)
+name = @notice.name
+
+c1 = Caracal::Core::Models::TableCellModel.new do
+  p name.upcase
+  p 'Plaintiff,' do
+    align :center
+  end
+  p '-versus-'
+  p 'THE CITY OF NEW YORK;'
+  officers_list.to_sentence.split(",").each do |o|
+            p "OFFICER #{o.upcase}"
+  end
+  p 'Defendants.' do
+    align :center
+  end
+end    
+
+docx.hr
+docx.table [[c1, 'VERIFICATION']]
+docx.hr
+
+docx.p
+docx.p
+
+docx.p 'STATE OF NEW YORK      	)'
+docx.p 'COUNTY OF [COUNTY] 	)'
+docx.p
+docx.p "#{@notice.name.upcase} being duly sworn, attests that they are the claimant in this matter, that they have read the attached Notice of Claim, and they attest that the statements therein are true and correct except as to those matters asserted upon information and belief and as to those matters he believes them to be true."
+
+docx.p
+docx.p
+docx.p
+
+docx.p "___________________________" do
+  align :right
+end
+docx.p @notice.name.upcase do
+  align :right
+end
+
+docx.p
+docx.p
+
+docx.p "Sworn and subscribed to me"
+docx.p "This _____________________"
+docx.p
+docx.p
+docx.p
+docx.p "______________________"
+docx.p "Notary Public"

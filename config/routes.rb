@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :notices
 
   get 'notices/:id/notice_of_claim' => 'notices#notice_of_claim', format: 'docx', as: :letter
-  get 'notices/:id/verification' => 'notices#verification', as: :verification
+  get 'notices/:id/verification' => 'notices#verification', format: 'docx', as: :verification
 
   get 'about' => 'static#about', as: :about
   get 'contact' => 'static#contact', as: :contact

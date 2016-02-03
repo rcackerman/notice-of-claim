@@ -59,14 +59,15 @@ class NoticesController < ApplicationController
   # GET
   def notice_of_claim 
     respond_to do |format|
-      format.docx { headers["Content-Disposition"] = "attachment; filename=\"caracal.docx\"" }
+      filename = "#{@notice.name.downcase}_notice_#{Time.new}".gsub(/\s+/, "")
+      format.docx { headers["Content-Disposition"] = "attachment; filename=\"#{filename}.docx\"" }
     end
   end
 
   def verification
     respond_to do |format|
-      format.html { render :verification }
-      format.docx { render :verification }
+      filename = "#{@notice.name.downcase}_verification_#{Time.new}".gsub(/\s+/, "")
+      format.docx { headers["Content-Disposition"] = "attachment; filename=\"#{filename}.docx\"" }
     end
   end
 
