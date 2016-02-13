@@ -23,7 +23,7 @@ docx.hr
 
 docx.p 'TO: THE COMPTROLLER OF THE CITY OF NEW YORK CITY'
 
-docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims claims will be for damages against the City of New York, #{officers_list.to_sentence.titleize}."
+docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims against the City of New York, #{officers_list.to_sentence.titleize}."
 docx.p
 docx.p "In support of their claims, Claimant states as follows:"
 docx.p
