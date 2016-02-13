@@ -62,6 +62,7 @@ module NoticesHelper
     objects = [notice.officer_took_what,
                 notice.officer_damaged_what,
                 notice.officer_destroyed_what].uniq.compact
+    objects = objects.reject { |o| o.empty? }
     objects.to_sentence
   end
 

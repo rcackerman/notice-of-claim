@@ -19,8 +19,7 @@ RSpec.describe NoticesHelper, type: :helper do
 
     context "number of officers selected is 0" do
       it "should show that all officers are unknown" do
-        officers = helper.generate_officers(notice_without_officers,
-                                            name_only=true)
+        officers = helper.generate_officers(notice_without_officers, true)
         expect(officers).to eq(["unknown officer(s)"])
       end
     end
@@ -28,8 +27,7 @@ RSpec.describe NoticesHelper, type: :helper do
     context "number of officers selected" do
       context "officers have data entered" do
         it "should use real names" do
-          officer_text = helper.generate_officers(notice_with_named_officers,
-                                                  name_only=true)
+          officer_text = helper.generate_officers(notice_with_named_officers, true)
           expect(officer_text).to contain_exactly(
             a_string_matching(/Bob [0-9]+/),
             a_string_matching(/Bob [0-9]+/))
@@ -38,22 +36,19 @@ RSpec.describe NoticesHelper, type: :helper do
 
       context "officers have no data entered" do
         it "should use placeholders for names" do
-          officer_text = helper.generate_officers(notice_with_unnamed_officers,
-                                                  name_only=true)
+          officer_text = helper.generate_officers(notice_with_unnamed_officers, true)
           expect(officer_text).to contain_exactly("John Doe")
         end
 
         it "should use placeholders for all un-entered officers" do
           notice = FactoryGirl.create(:notice, number_officers: 2)
-          officer_text = helper.generate_officers(notice,
-                                                  name_only=true)
+          officer_text = helper.generate_officers(notice, true)
           expect(officer_text).to contain_exactly("John Doe", "John Doe")
         end
 
         context "some officers have data entered" do
           it "should use real names and placeholder names" do
-            officer_text = helper.generate_officers(notice_with_named_and_unnamed_officers,
-                                                name_only=true)
+            officer_text = helper.generate_officers(notice_with_named_and_unnamed_officers, true)
             expect(officer_text).to contain_exactly(
               a_string_matching(/Bob [0-9]+/),
               a_string_matching(/John Doe/))
@@ -160,6 +155,14 @@ RSpec.describe NoticesHelper, type: :helper do
       it "should print each item once" do
         lost_objects = helper.generate_lost_objects (notice)
         expect(lost_objects).to eq("my banjo and my CD collection")
+      end
+    end
+
+    context "things were taken and damaged, but not destroyed" do
+      let (:notice) { FactoryGirl.create :notice_with_lost_objects }
+      it "should not print an empty space" do
+        lost_objects = helper.generate_lost_objects (notice)
+        expect(lost_objects).to_not eq("my banjo, my CD collection, and ,")
       end
     end
 

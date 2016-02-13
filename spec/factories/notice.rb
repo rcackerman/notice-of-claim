@@ -49,6 +49,14 @@ FactoryGirl.define do
     factory :notice_with_physical_injury, traits: [:physical_injury]
     factory :notice_with_searched_objects, traits: [:searched_object]
 
+    factory :notice_with_lost_object do
+      officer_took_property true
+      officer_damaged_property true
+      
+      officer_took_what "my banjo"
+      officer_damaged_what "my CD collection"
+    end
+
     factory :notice_with_lost_objects do
       officer_took_property true
       officer_damaged_property true
