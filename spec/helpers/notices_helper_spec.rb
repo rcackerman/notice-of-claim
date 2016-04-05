@@ -68,6 +68,56 @@ RSpec.describe NoticesHelper, type: :helper do
 
   end # end #generate_officers
 
+  describe "#generate_notice_claims" do
+    let(:notice) { FactoryGirl.create(:notice, :all_incidents) }
+
+    context "officer_arrested_no_probable_cause is true" do
+      it "should include no probable cause text" do
+        details = generate_notice_claims notice
+        expect(details).to match(/false imprisonment/)
+      end
+    end
+
+    context "officer_injured_me is true" do
+      let (:notice) { FactoryGirl.create(:notice_with_physical_injury)}
+      it "should include injury text" do
+        details = generate_notice_claims notice
+        expect(details).to match(/suffered a battery/)
+      end
+
+      pending "it should call #generate_injury_details"
+    end
+
+
+    context "officer_threatened_injury" do
+      it "should include threatened injury text" do
+        details = generate_notice_claims notice
+        expect(details).to match(/subjected to an assault/)
+      end
+    end
+
+    context "officer_searched" do
+      it "should include search text" do
+        details = generate_notice_claims notice
+        expect(details).to match(/illegal search/)
+      end
+
+      pending "it should call #generate_searched_objects"
+    end
+
+    context "officer_took_property or officer_damaged_property or officer_destroyed_property" do
+      it "should include taken property text once" do
+        details = generate_notice_claims notice
+        expect(details).to match(/Claimant’s property/)
+        expect(details).to_not match(/claimant was subjected to.+Claimaint's property/)
+      end
+
+      context "things were taken or destroyed" do
+        pending "it should call #generate_lost_objects"
+      end
+    end
+  end
+
   describe "#generate_injury_details" do
 
     context "there are injury details" do
