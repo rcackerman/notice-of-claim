@@ -1,3 +1,4 @@
+header_officers_list = generate_officers(@notice)
 officers_list = generate_officers(@notice, name_only=true).map{|o| o.titleize }
 name = @notice.name
 
@@ -8,8 +9,8 @@ c1 = Caracal::Core::Models::TableCellModel.new do
   end
   p '-versus-'
   p 'THE CITY OF NEW YORK;'
-  officers_list.to_sentence.split(",").each do |o|
-            p "OFFICER #{o.upcase}"
+  header_officers_list.to_sentence.split(",").each do |o|
+            p "#{o.upcase}"
          end
   p 'Respondents.' do
     align :center
