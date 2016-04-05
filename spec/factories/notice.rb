@@ -10,6 +10,17 @@ FactoryGirl.define do
       officer_threatened_injury true
     end
 
+    trait :all_incidents do
+      officer_injured_me true
+      officer_threatened_injury true
+      officer_searched true
+      officer_took_property true
+      officer_damaged_property true
+      officer_destroyed_property true
+      officer_arrested_no_probable_cause true
+      officer_refused_medical_attention true
+    end
+
     trait :physical_injury do
       officer_injured_me true
     end
