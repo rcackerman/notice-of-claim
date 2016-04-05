@@ -29,7 +29,7 @@ docx.p "In support of their claims, Claimant states as follows:"
 docx.p
 docx.p "The time, place, and manner in which the claims arose are as follows:"
 docx.p
-docx.p "On #{@notice.incident_occurred_at.to_date} at #{@notice.incident_occurred_at.localtime.hour}:#{ @notice.incident_occurred_at.localtime.min} at #{@notice.incident_location}."
+docx.p "On #{@notice.incident_occurred_at.to_date} at #{ display_time(@notice.incident_occurred_at) } at #{@notice.incident_location}."
 docx.p
 docx.p generate_notice_claims @notice
 docx.p

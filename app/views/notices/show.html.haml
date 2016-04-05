@@ -26,7 +26,7 @@
   .col-md-3
     %p Incident Occurred On
   .col-md-9
-    %p= @notice.incident_occurred_at
+    %p= @notice.incident_occurred_at.strftime("%m/%d/%Y at %I:%M %p")
 
 .row
   .col-md-12

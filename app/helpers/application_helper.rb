@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def display_time time
+    return time.strftime("%I:%M %p")
+  end
+
   def filter_trues object
     booleans = get_booleans(object.class)
     trues = booleans.select do |k,v|
@@ -17,6 +21,7 @@ module ApplicationHelper
     booleans = Hash[model.columns.select do |c|
       c.type == :boolean
     end.map{ |c| [c.name.to_sym, c.human_name] }]
+    booleans
   end
 
 end
