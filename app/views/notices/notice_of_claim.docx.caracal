@@ -1,4 +1,4 @@
-officers_list = generate_officers(@notice, name_only=true)
+officers_list = generate_officers(@notice, name_only=true).map{|o| o.titleize }
 name = @notice.name
 
 c1 = Caracal::Core::Models::TableCellModel.new do
@@ -23,7 +23,7 @@ docx.hr
 
 docx.p 'TO: THE COMPTROLLER OF THE CITY OF NEW YORK CITY'
 
-docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims against the City of New York, #{officers_list.to_sentence.titleize}."
+docx.p "PLEASE TAKE NOTICE that #{@notice.name} intends to file claims against the City of New York, #{officers_list.to_sentence}."
 docx.p
 docx.p "In support of their claims, Claimant states as follows:"
 docx.p
