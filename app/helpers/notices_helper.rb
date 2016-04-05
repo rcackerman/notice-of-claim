@@ -22,17 +22,20 @@ module NoticesHelper
     officers_list = generate_officers(notice).map{
                         |o| o.titleize
                     }.to_sentence
+    injury_detail = notice.physical_injury ? generate_injury_details(notice.physical_injury) :  ""
+    search_detail = notice.searched_object ? generate_searched_objects(notice.searched_object) :  ""
+
     if notice.officer_arrested_no_probable_cause == true
       claims << "Claimant was subjected to false arrest and false imprisonment by NYPD officers #{officers_list}."
     end
     if notice.officer_injured_me == true
-      claims << "Claimant suffered a battery and was subjected to excessive force #{generate_injury_details notice.physical_injury} at the hands of NYPD officers #{officers_list}."
+      claims << "Claimant suffered a battery and was subjected to excessive force #{injury_detail} at the hands of NYPD officers #{officers_list}."
     end
     if notice.officer_threatened_injury == true
       claims << "Claimant was subjected to an assault by NYPD officers #{officers_list}."
     end
     if notice.officer_searched == true
-      claims << "Claimant was subjected to an illegal search of their property when NYPD officers #{officers_list} searched their #{generate_searched_objects notice.searched_object}."
+      claims << "Claimant was subjected to an illegal search of their property when NYPD officers #{officers_list} searched their #{search_detail}."
     end
     if notice.officer_took_property == true || notice.officer_damaged_property == true || notice.officer_destroyed_property == true
       claims << "Claimant’s property, to wit #{generate_lost_objects notice}, was #{pick_if_seized_damaged notice} by NYPD officers #{officers_list}. As a result, claimant was subjected to #{pick_property_claim_type notice}."
