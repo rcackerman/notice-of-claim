@@ -1,0 +1,12 @@
+= human_boolean "An officer injured me", @notice.officer_injured_me
+.row
+  .col-md-6.col-md-offset-3
+    - unless @notice.physical_injury.nil?
+      .well
+        - trues = filter_trues(@notice.physical_injury)
+        - trues.each do |i|
+          .row
+            .col-md-12
+              %p Injuries:
+              %ul.list-unstyled
+                %li= i.last

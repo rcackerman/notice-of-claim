@@ -1,0 +1,9 @@
+.row
+  - unless @notice.searched_object.nil?
+    .col-md-6.col-md-offset-3
+      .well
+        %p What was searched:
+        %ul.list-unstyled
+          - trues = filter_trues(@notice.searched_object)
+          - trues.each do |i|
+            %li= i.last

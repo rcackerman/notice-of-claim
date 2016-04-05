@@ -5,12 +5,12 @@
     %h2 Review your Notice of Claim
 .row
   .col-md-3
-    %p Name
+    %p.text-right Name
   .col-md-9
     %p= @notice.name
 .row
   .col-md-3
-    %p Address
+    %p.text-right Address
   .col-md-9
     %p= @notice.address
 
@@ -19,48 +19,28 @@
     %h3 Incident Details 
 .row
   .col-md-3
-    %p Incident Location
+    %p.text-right Incident Location
   .col-md-9
     %p= @notice.incident_location
 .row
   .col-md-3
-    %p Incident Occurred On
+    %p.text-right Incident Occurred On
   .col-md-9
     %p= @notice.incident_occurred_at.strftime("%m/%d/%Y at %I:%M %p")
 
-.row
+.row.section-head#injuries
   .col-md-12
-    %h5 Injuries
-.row
-  .col-md-3
-    %p An officer injured me
-  .col-md-9
-    %p= @notice.officer_injured_me ? "Yes" : "No"
-    -#- binding.pry
-    - unless @notice.physical_injury.nil?
-      - trues = filter_trues(@notice.physical_injury)
-      - trues.each do |i|
-        .row
-          .col-md-3
-            %p= i.last
-          .col-md-9
-            %p Yes
+    %p.lead Injuries
+= render(partial: 'notices/cards/injuries')
 
 = human_boolean "An officer threatened to hit or hurt me", @notice.officer_threatened_injury
 
-.row
+.row.section-head#search
   .col-md-12
-    %h5 Search, Seizure, Damage, or Destruction of Property
+    %p.lead Search, Seizure, Damage, or Destruction of Property
 
 = human_boolean "An officer searched me or my property without my permission", @notice.officer_searched
-- unless @notice.searched_object.nil?
-  - trues = filter_trues(@notice.searched_object)
-  .row
-    .col-md-9.col-md-offset-3
-      %p An officer searched:
-      %ul
-        - trues.each do |i|
-          %ol= i.last
+= render(partial: 'notices/cards/searched_objects')
 
 = human_boolean "An officer took my property", @notice.officer_took_property
 .row
@@ -80,40 +60,40 @@
     %p What was destroyed?
     %p= @notice.officer_destroyed_what
 
-.row
+.row.section-head#arrests
   .col-md-12
-    %h5 Arrests
+    %p.lead Arrests
 = human_boolean "An officer arrested me without probable cause", @notice.officer_arrested_no_probable_cause
 
-.row
+.row.section-head#medical
   .col-md-12
-    %h5 Refusal of Medical Attention
+    %p.lead Refusal of Medical Attention
 = human_boolean "I needed medical attention, but an officer refused to provide it", @notice.officer_refused_medical_attention
 
-.row
+.row.section-head#officers
   .col-md-12
     %h3 Officers Involved
 .row
   .col-md-3
-    %p How many officers were involved?
+    %p.text-right How many officers were involved?
   .col-md-9
     %p= @notice.number_officers
 - @notice.officers.each.with_index(1) do |o, index|
   .row
-    .col-md-12
+    .col-md-9.col-md-offset-1
       %h5 Officer #{index}
   .row
     .col-md-3
-      %p Name
+      %p.text-right Name
     .col-md-9
       %p= o.name
   .row
     .col-md-3
-      %p Badge number
+      %p.text-right Badge number
     .col-md-9
       %p= o.badge_number
 
-.row
+.row.section-head#damages
   .col-md-12
     %h3 Damages
 
