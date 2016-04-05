@@ -2,16 +2,17 @@
 
 <h1>Listing Notices</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Name of Claimant</th>
     </tr>
   </thead>
 
   <tbody>
     <% @notices.each do |notice| %>
       <tr>
+        <td><%= notice.name %></td>
         <td><%= link_to 'Show', notice %></td>
         <td><%= link_to 'Edit', edit_notice_path(notice) %></td>
         <td><%= link_to 'Destroy', notice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
