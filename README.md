@@ -43,7 +43,7 @@ Extra credit if you recommend changes that make the Readme easier to use.
 
 ### Want to Contribute?
 
-Please check out the [issues page](https://github.com/notice-of-claim/issues/) and help out with any that have a "helpwanted" tag! Just create a fork and submit a pull request when you're done.
+Please check out the "help wanted" issues on the [issues page](https://github.com/rcackerman/notice-of-claim/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)! Just create a fork and submit a pull request when you're done.
 
 ### Team
 
