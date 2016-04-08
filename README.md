@@ -41,9 +41,9 @@ Report it here: https://github.com/rcackerman/notice-of-claim/issues
 
 Extra credit if you recommend changes that make the Readme easier to use.
 
-### Note on Patches/Pull Requests
+### Want to Contribute?
 
-This project is still in infancy, so it isn't ready for pull requests. Check back soon!
+Please check out the [issues page](https://github.com/notice-of-claim/issues/) and help out with any that have a "helpwanted" tag! Just create a fork and submit a pull request when you're done.
 
 ### Team
 
