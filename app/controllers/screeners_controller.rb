@@ -38,8 +38,8 @@ class ScreenersController < ApplicationController
           #format.json { render :show, status: :created, location: @screener }
         else
           # TODO: redirect to static "sorry" page
-          format.html { redirect_to @screener, notice: 'Screener successful but criteria not met.'}
-          format.json { render :show, status: :created, location: @screener }
+          format.html { redirect_to controller: 'static', action: 'next_steps', notice: 'Screener successful but criteria not met.'}
+          #format.json { render :show, status: :created, location: @screener }
         end
       else
         #binding.pry
@@ -96,7 +96,7 @@ class ScreenersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def screener_params
       params.require(:screener).permit(:harmed_mistreated,
-                               :incident_occurred_on)
+                               :incident_occurred_on, :commit)
     end
 
 end
