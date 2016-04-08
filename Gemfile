@@ -6,6 +6,9 @@ gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Use devise for authentication and user accounts
+gem 'devise'
+
 # Use HAML for HTML
 gem 'haml' 
 
