@@ -24,6 +24,9 @@ class NoticesController < ApplicationController
 
   # GET /notices/1/edit
   def edit
+    # create up to three more officers
+    new_officers = 3 - @notice.officers.count
+    new_officers.times { @notice.officers.build }
   end
 
   # POST /notices
@@ -90,8 +93,10 @@ class NoticesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def notice_params
       params.require(:notice).permit(:name,
-                                   :address, :incident_description,
-                                   :incident_location, :incident_occurred_at,
+                                   :address,
+                                   :incident_description,
+                                   :incident_location,
+                                   :incident_occurred_at,
                                    :officer_injured_me,
                                    {physical_injury_attributes: [
                                     :beaten_with_object,
@@ -105,16 +110,20 @@ class NoticesController < ApplicationController
                                     :other,
                                     :other_description 
                                    ]},
-                                   :officer_threatened_injury, :officer_searched,
+                                   :officer_threatened_injury,
+                                   :officer_searched,
                                    {:searched_object_attributes => [:vehicle, :bag, :pockets,
                                                          :home, :other]},
-                                   :officer_took_property, :officer_took_what,
-                                   :officer_damaged_property, :officer_damaged_what,
+                                   :officer_took_property,
+                                   :officer_took_what,
+                                   :officer_damaged_property,
+                                   :officer_damaged_what,
                                    :officer_destroyed_property, :officer_destroyed_what,
                                    :officer_arrested_no_probable_cause,
                                    :officer_refused_medical_attention,
                                    :none_of_the_above,
-                                   :number_officers, {:officers_attributes => [:name, :badge_number]},
+                                   :number_officers,
+                                   {:officers_attributes => [:id, :name, :badge_number]},
                                    :damages_physical_pain, :damages_medical_attention,
                                    :damages_miss_work, :damages_embarrassment,
                                    :damages_emotional_distress, :damages_property,
