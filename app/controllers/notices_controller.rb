@@ -24,6 +24,9 @@ class NoticesController < ApplicationController
 
   # GET /notices/1/edit
   def edit
+    # create up to three more officers
+    new_officers = 3 - @notice.officers.count
+    new_officers.times { @notice.officers.build }
   end
 
   # POST /notices
