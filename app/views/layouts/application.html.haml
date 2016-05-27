@@ -21,5 +21,12 @@
 %footer.footer
   .container
     .row
-      .col-md-12
+      .col-md-6
         %p Have issues? Submit a #{link_to 'ticket', 'https://github.com/rcackerman/notice-of-claim/issues/new'}
+      .col-md-6
+        .pull-right
+          - if user_signed_in?
+            %p #{ link_to('Logout', destroy_user_session_path, :method => :delete) } | #{ link_to("Change your password", edit_user_registration_path) }
+          - else
+            %p= link_to('Sign In', new_user_session_path)
+
