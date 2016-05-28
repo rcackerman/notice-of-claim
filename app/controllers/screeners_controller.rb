@@ -26,7 +26,6 @@ class ScreenersController < ApplicationController
   # POST /screeners.json
   def create
     @screener = Screener.new(screener_params)
-    #binding.pry
 
     respond_to do |format|
       if @screener.save

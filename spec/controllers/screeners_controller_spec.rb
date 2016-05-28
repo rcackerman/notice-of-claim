@@ -6,7 +6,7 @@ RSpec.describe ScreenersController, type: :controller do
   # Screener. As you add validations to Screener, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {:harmed_mistreated => true, :incident_occurred_on => Date.today}
+    {:harmed_mistreated => true, :incident_occurred_on => Date.today.strftime("%m/%d/%Y")}
   }
 
   let(:invalid_attributes) {
@@ -19,18 +19,18 @@ RSpec.describe ScreenersController, type: :controller do
   let(:valid_session) { {} }
 
   let(:screened_in_attributes) {
-    {:harmed_mistreated => true, :incident_occurred_on => Date.today}
+    {:harmed_mistreated => true, :incident_occurred_on => Date.today.strftime("%m/%d/%Y")}
   }
 
   let(:screened_out_attributes) {
-    {:harmed_mistreated => false, :incident_occurred_on => Date.today}
+    {:harmed_mistreated => false, :incident_occurred_on => Date.today.strftime("%m/%d/%Y")}
   }
 
   describe "#screen_claim" do
     context "user was harmed by NYPD" do
       context "and it happened within 90 days" do
         it "screens in" do
-          incident_date = (Date.today - 80).to_s
+          incident_date = (Date.today - 80).strftime("%m/%d/%Y")
           result = controller.screen_claim(true, incident_date)
           expect(result).to be true
         end
@@ -38,7 +38,7 @@ RSpec.describe ScreenersController, type: :controller do
 
       context "and it happened 90 days ago" do
         it "screens in" do
-          incident_date = (Date.today - 90).to_s
+          incident_date = (Date.today - 90).strftime("%m/%d/%Y")
           result = controller.screen_claim(true, incident_date)
           expect(result).to be true
         end
@@ -46,7 +46,7 @@ RSpec.describe ScreenersController, type: :controller do
 
       context "and it happened more than 90 days ago" do
         it "screens out" do
-          incident_date = (Date.today - 91).to_s
+          incident_date = (Date.today - 91).strftime("%m/%d/%Y")
           result = controller.screen_claim(true, incident_date)
           expect(result).to be false
         end
@@ -57,21 +57,21 @@ RSpec.describe ScreenersController, type: :controller do
     context "user was not harmed by NYPD" do
       context "and it happened within 90 days" do
         it "screens out" do
-          incident_date = (Date.today - 80).to_s
+          incident_date = (Date.today - 80).strftime("%m/%d/%Y")
           result = controller.screen_claim(false, incident_date)
           expect(result).to be false
         end
       end
       context "and it happened 90 days ago" do
         it "screens out" do
-          incident_date = (Date.today - 90).to_s
+          incident_date = (Date.today - 90).strftime("%m/%d/%Y")
           result = controller.screen_claim(false, incident_date)
           expect(result).to be false
         end
       end
       context "and it happened more than 90 days ago" do
         it "screens out" do
-          incident_date = (Date.today - 91).to_s
+          incident_date = (Date.today - 91).strftime("%m/%d/%Y")
           result = controller.screen_claim(false, incident_date)
           expect(result).to be false
         end
