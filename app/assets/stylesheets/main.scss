@@ -35,6 +35,16 @@ label.required:after {
   color: #fff;
   background-color: #5499C7;
   border-color: #2980B9;
+
+  &:active {
+    color: #fff;
+    background-color: #2471A3;
+  }
+
+  &:hover, &:focus {
+    color: #fff;
+    background-color: #2471A3;
+  }
 }
 
 #back-link {
