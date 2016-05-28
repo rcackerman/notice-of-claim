@@ -42,7 +42,6 @@ class ScreenersController < ApplicationController
           format.json { render :show, status: :created, location: @screener }
         end
       else
-        #binding.pry
         format.html { render :new }
         format.json { render json: @screener.errors, status: :unprocessable_entity }
       end
@@ -75,7 +74,7 @@ class ScreenersController < ApplicationController
 
   def screen_claim(harm, incident_date)
     begin
-      incident_date = Date.parse(incident_date)
+      incident_date = Date.strptime(incident_date, '%m/%d/%Y')
       if harm && (incident_date >= Date.today - 90)
         return true
       else
